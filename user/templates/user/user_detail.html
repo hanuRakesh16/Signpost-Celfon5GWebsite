@@ -1,0 +1,181 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load widget_tweaks %}
+{% block content %}
+<div id="container">
+    <section class="login-page section-b-space">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center;">Firm Registration</h3>
+                    <div class="theme-card">
+                        <form id="userDetailForm" method="post" data-cities-url="{% url 'ajax_load_cities' %}"data-cat-url="{% url 'ajax_load_cat' %}"
+                      data-p-url="{% url 'ajax_load_p' %}">
+                            {% csrf_token %}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">Firm Name:</label>
+                                            {% render_field form.name class="form-control" data-rule-minlength="2" data-rule-maxlength="45" data-msg-minlength="At least two chars" data-msg-maxlength="max 45 chars" maxlength="45" type="text" id="bname" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="phoneNumber" class="form-label">Mobile Number:</label>
+                                            {% render_field form.mobile_number class="form-control phone" pattern="(0|91)?[6-9][0-9]{9}" required="required" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" type="number" id="ph" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="streetName" class="form-label">Street Name:</label>
+                                            {% render_field form.street_name class="form-control" type="text" id="exampleInputUsername" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="city" class="form-label">City:</label>
+                                            {% render_field form.city class="form-control" type="text" id="exampleInputUsername" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">State:</label>
+                                            {% render_field form.state class="form-control" maxlength="100" type="dropdown" id="id_state" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">District:</label>
+                                            {% render_field form.district class="form-control" maxlength="100" type="dropdown" id="id_city" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pincode" class="form-label">Pincode:</label>
+                                            {% render_field form.pincode class="form-control" pattern=".{6}" required="required" title="6 characters minimum" type="number" id="pincode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="6" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="product" class="form-label">Product:</label>
+                                            {% render_field form.mproducts1 class="form-control product" name="mp1" type="text" id="id_products" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="category" class="form-label">Category:</label>
+                                            {% render_field form.mcategory1 class="form-control" name="mc1" type="text" id="id_category" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="subCategory" class="form-label">Sub-Category:</label>
+                                            {% render_field form.msub_category1 class="form-control" name="msc1" type="text" id="id_sub_category" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="productType" class="form-label">Product Type:</label>
+                                            {% render_field form.mtype1 class="form-control" name="mtype1" type="text" id="type1" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group text-center">
+                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+<script>
+     $("#id_state").change(function () {
+            const url = $("#userDetailForm").attr("data-cities-url");  // get the url of the `load_cities` view
+            const countryId = $(this).val();  // get the selected country ID from the HTML input
+
+            $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+                data: {
+                    'region_id': countryId       // add the country id to the GET parameters
+                },
+                success: function (data) {   // `data` is the return of the `load_cities` view function
+                    $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
+                }
+            });
+        });
+
+        $("#id_products").change(function () {
+            const url = $("#userDetailForm").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_sub_category").html(data);
+                }
+            });
+        });
+        $("#id_products").change(function () {
+            const url = $("#userDetailForm").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_category").html(data);
+                }
+            });
+        });
+</script>
+
+{% endblock %}
+
+
+
+    

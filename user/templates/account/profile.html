@@ -1,0 +1,415 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+    <!--  dashboard section start -->
+    
+    <section class="dashboard-section section-b-space">
+        <div class="container">
+            {% if messages %}
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+                {% comment %} <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> {% endcomment %}
+                <div>
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div id="form_errors">
+                        {% for key, value in form.errors.items %}
+                            <strong>{{ value }}</strong>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="dashboard-sidebar">
+                        <div class="profile-top">
+                            <div class="profile-image">
+                                <img src="../assets/images/logos/17.png" alt="" class="img-fluid">
+                            </div>
+                            <div class="profile-detail">
+                                <h5>{{obj.username}}</h5>
+                                {% comment %} <h6>750 followers | 10 review</h6> {% endcomment %}
+                                <h6>{{obj.email}}</h6>
+                            </div>
+                        </div>
+                        <div class="faq-tab">
+                            <ul class="nav nav-tabs" id="top-tab" role="tablist">
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link active"
+                                        href="#profile">Profile</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link"
+                                        href="#wallet">My Wallet</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link"
+                                        href="#subscription">Subscriptions</a>
+                                </li>    
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link"
+                                        href="#listing">My Listings</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link"
+                                    href="#analytics">Analytics</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link"
+                                    href="#notifications">Notifications</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{% url 'password_change' %}">Change Password</a>
+                                </li>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="modal" data-bs-target="#logout"
+                                        href="{% url 'user-logout' %}">logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="faq-content tab-content" id="top-tabContent">
+                        <div class="tab-pane fade show active" id="profile">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mt-0">
+                                        <div class="card-body">
+                                            <div class="dashboard-box">
+                                                <div class="dashboard-title">
+                                                    <h4>Profile</h4>
+                                                    <span data-toggle="modal" data-bs-target="#edit-profile">edit</span>
+                                                </div>
+                                                <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                    <div class="dashboard-detail">
+                                                        <ul>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>Username</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{ user_form.username }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>First Name</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{ user_form.first_name }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>Last Name</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{ user_form.last_name }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>Email address</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{ user_form.email }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>Contact</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{ profile_form.mobile_number }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>street address</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{profile_form.street_address}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>City</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{profile_form.city}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>State</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{profile_form.state}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left mt-2">
+                                                                        <h6>zip</h6>
+                                                                    </div>
+                                                                    <div class="right">
+                                                                        <h6>{{profile_form.zipcode}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div><br>
+                                                    <button type="submit"
+                                                                    class="btn btn-solid btn-xs">Update
+                                                                    Details</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="tab-pane fade" id="wallet">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h2>My Wallet</h2>                               
+                                            </div>
+                                            <div class="top-sec">                                        
+                                                </br>
+                                                <h3 class="text-left fw-bold">Balance Credit Points :</h3>
+                                                {% for balance in credit_points %}
+                                                    <div>
+                                                    <h3 class="text-right fw-bold">{{balance.credit_points}}</h3>
+                                                    </div>
+                                                {% endfor %}
+                                                
+                                                <a href="#" class="btn btn-sm btn-solid">Recharge</a>
+                                                </br>
+                                            </div>
+                                            <table class="table mb-0" style="height: 10vh; overflow: scroll;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">S.no</th>
+                                                        <th scope="col">Date&Time</th>
+                                                        <th scope="col">Description</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                {% if transactions %}
+                                                <tbody>
+                                                    {% for transaction in transactions %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>{{transaction.date}}</td>
+                                                        <td>{{transaction.desc}}</td>
+                                                        <td>{{transaction.value}}</td>
+                                                        <td>{{transaction.type}}</td>
+                                                    </tr>
+                                                    {%endfor%}
+                                                </tbody>
+                                                {% else %}
+                                                    <h3>No Recent Transactions</h3>
+                                                {% endif%}
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="subscription">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h2>Subscription Plans</h2>
+                                            </div>
+                                            <div>
+                                                <h3>Select a Subscription Plan:</h3>
+                                                {% if plans %}
+                                                <ul>
+                                                    {% for plan in plans %}
+                                                    <div>
+                                                        <h3 class="text-right fw-bold">{{ plan.name }}</h3>
+                                                        <p>{{ plan.description }}</p>
+                                                        <p>Price: ${{ plan.price }}</p>
+                                                    </div>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% else%}
+                                                <p>No subscription plans available.</p>
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="listing">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h3>All Listings</h3>
+                                                {% comment %}  <a href="{% url 'map_mylisting' user=request.user.username %}" class="btn btn-sm btn-solid">Update</a>{% endcomment %}
+                                                {% comment %} <a href="#" class="btn btn-sm btn-solid">add product</a> {% endcomment %}
+                                            </div>
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Image</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Link</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                {% if listings %}
+                                                <tbody>
+                                                    {% for listing in listings %}
+                                                    <tr>
+                                                        {% if listing.logo %}
+                                                        <th scope="row"><img
+                                                                src="{{ listing.logo.url }}"
+                                                                class="blur-up lazyloaded"></th>
+                                                        {% else %}
+                                                        <th scope="row"><img
+                                                                src="{% static 'webimages/cel.jpg' %}"
+                                                                class="blur-up lazyloaded"></th>
+                                                        {% endif %}
+                                                        <td>{{listing.name}}</td>
+                                                        {% if listing.detailType == 'F' %}
+                                                        <td><a href="{{listing.get_absolute_url}}" class="btn btn-solid btn-xs ">Preview</a></td>
+                                                        {% else %}
+                                                        <td><a href="{{listing.get_person_url}}" class="btn btn-solid btn-xs">Preview</a></td>
+                                                        {%endif%}
+                                                         <td><a href="{% url 'update_firm' listing.slug %}" class="btn btn-solid btn-xs">Update</a></td>
+                                                    </tr>
+                                                    {%endfor%}
+                                                </tbody>
+                                                {% else %}
+                                                    <h3>No listings Available</h3>
+                                                {% endif%}
+                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>        
+                        <div class="tab-pane fade" id="analytics">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h3>All Listings</h3>
+                                                {% comment %}  <a href="{% url 'map_mylisting' user=request.user.username %}" class="btn btn-sm btn-solid">Update</a>{% endcomment %}
+                                                {% comment %} <a href="#" class="btn btn-sm btn-solid">add product</a> {% endcomment %}
+                                            </div>
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Image</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Count</th>
+                                                        <th scope="col">Graph</th>
+                                                    </tr>
+                                                </thead>
+                                                {% if listings %}
+                                                <tbody>
+                                                    {% for listing in listings %}
+                                                    <tr>
+                                                        {% if listing.logo %}
+                                                        <th scope="row"><img
+                                                                src="{{ listing.logo.url }}"
+                                                                class="blur-up lazyloaded"></th>
+                                                        {% else %}
+                                                        <th scope="row"><img
+                                                                src="{% static 'webimages/cel.jpg' %}"
+                                                                class="blur-up lazyloaded"></th>
+                                                        {% endif %}
+                                                        <td>{{listing.name}}</td>
+                                                        <td>{{listing.Count}}</td>
+                                                        {% if listing.detailType == 'F' %}
+                                                        <td><a href="{% url 'analytics' listing.slug %}" class="btn btn-solid btn-xs " target="_blank">Graph</a></td>
+                                                        {% else %}
+                                                        <td><a href="{% url 'analytics' listing.slug %}" class="btn btn-solid btn-xs" target="_blank">Graph</a></td>
+                                                        {%endif%}
+                                                           </tr>
+                                                    {%endfor%}
+                                                </tbody>
+                                                {% else %}
+                                                    <h3>No listings Available</h3>
+                                                {% endif%}
+                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="tab-pane fade" id="notifications">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h2>Manage your notification</h2>
+                                            </div>
+                                            <div>
+                                                {%for firm in notification_messages%}
+                                                <div >
+                                                    <a href="{% url 'notification' firm.firm.slug %}" target="_blank" class="btn "><p>Your {{firm.firm}} has been displayed {{firm.nsearchcount}} times. Click to know more.</p></a>
+                                                    
+                                                </div>
+                                                {%endfor%}
+                                            </div>    
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  dashboard section end -->
+
+
+    
+{% endblock %}

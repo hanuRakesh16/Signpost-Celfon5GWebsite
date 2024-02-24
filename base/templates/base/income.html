@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h1 class="text-dark text-center"> My Earnings </h1>
+        <hr>
+        <h4 class="text-dark">User : {{ user }}</h4>
+        {% if worker %}
+            <h5 class="text-dark">Data Entry (Firms) : <span class="text-success">₹{{ worker.income_amount }}</span></h5>
+        {% else %}
+            <h5 class="text-dark">Data Entry (Firms) : 0 </h5>
+        {% endif %}
+        {% if individualtotal %}
+            <h5 class="text-dark">Data Entry (Persons) : <span class="text-success">₹{{ individualtotal.total_income }}</span></h5>
+        {% else %}
+            <h5 class="text-dark">Data Entry (Persons) : 0 </h5>
+        {% endif %}
+        {% if blworker %}
+            <h5 class="text-dark">Business Listing and Ads : <span class="text-success">₹{{ blworker.total }}</span></h5>
+        {% else %}
+            <h5 class="text-dark">Business Listing and Ads : 0 </h5>
+        {% endif %}
+      
+        {% comment %} {% if bltotal %}
+            <h5 class="text-dark">Amount to be delivered : <span class="text-success">₹{{ bltotal.total }}</span></h5>
+        {% else %}
+            <h5 class="text-dark">Amount to be delivered : 0 </h5>
+        {% endif %} {% endcomment %}
+        <hr>
+        <div class="container mt-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" data-bs-toggle="tab" href="#home">
+                        Data Entry</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" data-bs-toggle="tab" href="#profile">
+                        Business Listing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" data-bs-toggle="tab" href="#individual">
+                        Persons Form</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <div class="row border g-0 rounded shadow-sm">
+                        <div class="col p-4">
+                            <div class="panel-body table-responsive text-dark">
+                                <table class="table text-dark">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Business name</th>
+                                        <th>Date</th>
+                                        <th>Income</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for summary in summary %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ summary.firm_name }}</td>
+                                            <td>{{ summary.date }}</td>
+                                            <td class="text-success">+{{ summary.income }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <h3>No Items in List</h3>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="profile">
+                    <div class="row border g-0 rounded shadow-sm">
+                        <div class="col p-4">
+                            <div class="panel-body table-responsive text-dark">
+                                <table class="table text-dark">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Business name</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Commission</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for summary in blsummary %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ summary.firm_name }}</td>
+                                            <td>{{ summary.date }}</td>
+                                            <td class="text-success">₹{{ summary.amount }}</td>
+                                            <td class="text-success">+{{ summary.income }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <h3>No Items in List</h3>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="tab-pane" id="individual">
+                    <div class="row border g-0 rounded shadow-sm">
+                        <div class="col p-4">
+                            <div class="panel-body table-responsive text-dark">
+                                <table class="table text-dark">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+{#                                        <th>Total Fields</th>#}
+                                        <th>Date</th>
+                                        <th>Income</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in individualincome %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ i.name }}</td>
+{#                                            <td>{{ i.total_fields }}</td>#}
+                                            <td>{{ i.date }}</td>
+                                            <td class="text-success">+{{ i.income }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <h3>No Items in List</h3>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

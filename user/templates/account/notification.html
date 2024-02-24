@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+ 
+{% load i18n %}
+{% load account socialaccount %}
+ 
+{% load crispy_forms_filters %}
+ 
+{% comment %} {% block head_title %}{% trans "Sign In" %}{% endblock %} {% endcomment %}
+ 
+{% block content %}
+<h2 style="text-align:center;font-weight:bold;color:#ff4c3b;">Performance for the firm : {{firm.firm}}</h2>
+<div>
+    <h3 style="text-align:center;color:black;">Search Queries for this Firm</h3>
+    <img src="data:image/png;base64,{{ pie_chart_image }}" alt="Pie Chart">
+    <img src="data:image/png;base64,{{ bar_chart_image }}" alt="Bar Graph">
+</div>
+     
+{% endblock %}

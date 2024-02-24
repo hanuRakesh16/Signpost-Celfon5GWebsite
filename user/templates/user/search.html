@@ -1,0 +1,405 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .section1 {
+        background-color: lightcyan;
+        margin: 30px;
+        padding: 10px;
+        align-items: center;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .section {
+        margin: 30px;
+        padding: 10px;
+        align-items: center;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .span1 {
+        color: aliceblue;
+    }
+
+    .button1:hover {
+        color: #000000;
+
+    }
+
+
+    .ribbon span {
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFF;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 25px;
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(0deg);
+        width: 150px;
+        display: block;
+        background: var(--theme-deafult);
+        -webkit-box-shadow: 0 3px 10px -5px black;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        box-shadow: 0 3px 10px -5px black;
+        position: absolute;
+        top: -10px;
+        left: -20px;
+        z-index: 99;
+    }
+</style>
+    <section class="section-b-space ratio_asos section">
+        <div class="collection-wrapper">
+            <div class="container">
+                <div class="product-wrapper-grid list-view">
+                    <div class="col-xl-12 col-sm-12 col-12 col-lg-12">
+                            <div class=" bg-color1 m-0 p-1">
+                                <h3 class="d-flex justify-content-center text-dark">Results for "{{ query }}" &nbsp;&nbsp;</h3>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    {% if premiums %}
+    {% for premium in premiums %}
+        {% if premium.detailType == 'F' %}
+            {#    custom  #}
+            <section class="section-b-space ratio_asos section1">
+                <div class="collection-wrapper">
+                    <div class="container">
+                        <div class="product-wrapper-grid list-view">
+                            <div class="">
+                                <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+                                    <div class="product-box">
+                                        <!-- <div class="box">
+                                            <div class="ribbon ribbon-top-left"><span>Premium</span></div> -->
+                                            <div class="ribbon">
+                                                <span>Premium</span>
+                                            </div>
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                {% if premium.logo %}
+                                                    <img src="{{ premium.logo.url }}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% else %}
+                                                    <img src="{% static 'webimages/cel.jpg' %}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% endif %}
+                                            </div>
+                                        </div>                                     
+                                        <div class="product-detail">
+                                            <div>
+                                                <a href="{{ premium.get_absolute_url }}" class="font-weight-bold h3 ">
+                                                    <b>{{ premium.name }} <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 20px;"></i></b>
+                                                </a>
+                                                {% if premium.altname %}
+                                                <div class="promoter h5"><br><i class="fa fa-user"></i>&nbsp;
+                                                    <span class="h6">{{ premium.prefix|default:"" }}.{{ premium.altname|default:"Not Available" }}</span>
+                                                </div>
+                                                {% endif %}
+                                                <div class="address h5"><i class="fa-solid fa-location-dot"></i>&nbsp;
+                                                    <span class="h6">{{ premium.door_no|default:'' }}, {{ premium.street_name|default:'' }}, {{ premium.area|default:'' }}, {{ premium.city|default:'' }}, {{ premium.pincode|default:'' }}</span>
+                                                </div>
+                                                <div class="phone h5"><i class="fa fa-solid fa-phone"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="{{ premium.get_absolute_url }}">{{ premium.mobile_number|slice:4 }}XXXXXX</a></span>
+                                                </div>
+                                                    <button class="btn button1 btn-solid "><a
+                                                            href="mailto:{{ premium.email }}"><span
+                                                            class="button1 span1">Email</span></a></button>&nbsp;
+                                                            {% if request.user.is_authenticated %}
+                                                                {% if premium.pk in wishlist %}
+                                                                <button class="btn button1 btn-solid" >
+                                                                <a href="{% url 'user_wishlist' premium.slug %}">
+                                                                  <span id="wishlistText" class="button1 span1">Remove from prospects list</span>
+                                                                </a>
+                                                                </button>
+                                                              {% else %}
+                                                                  <button class="btn button1 btn-solid" >
+                                                                    <a href="{% url 'user_wishlist' premium.slug %}">
+                                                                      <span id="wishlistText" class="button1 span1">Add to prospects list</span>
+                                                                    </a>
+                                                                  </button>
+                                                              {% endif %}
+                                                            {% else %}
+                                                            <button class="btn button1 btn-solid" >
+                                                                <a href="{% url 'user-login' %}">
+                                                                  <span id="wishlistText" class="button1 span1">Add to prospects list</span>
+                                                                </a>
+                                                              </button>
+                                                            {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {#    custom  #}
+            {% else %}
+            <section class="section-b-space ratio_asos section1">
+                <div class="collection-wrapper">
+                    <div class="container">
+                        <div class="product-wrapper-grid list-view">
+                            <div class="">
+                                <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+                                    <div class="product-box">
+                                        <div class="ribbon">
+                                            <span>Premium</span>
+                                        </div>
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                {% if premium.logo %}
+
+                                                    <img src="{{ premium.logo.url }}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% else %}
+                                                    <img src="{% static 'webimages/cel.jpg' %}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div>
+
+                                                <a href="{{ premium.get_person_url }}" class="font-weight-bold h3 ">
+                                                    <b>{{ premium.prefix|default:'' }}.{{ premium.name|default:'' }} <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 20px;"></i></b>
+                                                </a>
+                                                {% if premium.altname %}
+                                                <div class="promoter h5"><br><i class="fa fa-briefcase"></i>&nbsp;
+                                                    <span class="h6">{{ premium.altname|default:"" }}</span>
+                                                </div>
+                                                {% endif %}
+                                                <div class="address h5"><i class="fa-solid fa-location-dot"></i>&nbsp;
+                                                    <span class="h6">{{ premium.door_no|default:'' }}, {{ premium.street_name|default:'' }}, {{ premium.area|default:'' }}, {{ premium.city|default:'' }}, {{ premium.pincode|default:'' }}</span>
+                                                </div>
+                                                <div class="phone h5"><i class="fa fa-solid fa-phone"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="{{ premium.get_person_url }}">{{ premium.mobile_number|slice:4 }}XXXXXX</a></span>
+                                                </div>
+
+                                                    <button class="btn button1 btn-solid "><a
+                                                            href="mailto:{{ premium.email }}"><span
+                                                            class="button1 span1">Email</span></a></button>&nbsp;
+                                                 {% if request.user.is_authenticated %}
+                                                {% if premium.pk in wishlist %}
+
+                                                    <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user_wishlist' premium.slug %}">
+                                                          <span id="wishlistText" class="button1 span1">Remove from prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                      {% else %}
+                                                      <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user_wishlist' premium.slug %}">
+                                                          <span id="wishlistText" class="button1 span1">Add to prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                      {% endif %}
+                                                    {% else %}
+                                                    <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user-login' %}">
+                                                          <span id="wishlistText" class="button1 span1">Add to prospects list</span>
+                                                        </a>
+                                                      </button>
+
+                                                    {% endif %}&nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if objects %}
+    {% for object in objects %}
+        {% if object.detailType == 'F' %}
+            {#    custom  #}
+            <section class="section-b-space ratio_asos section1">
+                <div class="collection-wrapper">
+                    <div class="container">
+                        <div class="product-wrapper-grid list-view">
+                            <div class="">
+                                <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                {% if object.logo %}
+
+                                                    <img src="{{ object.logo.url }}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% else %}
+                                                    <img src="{% static 'webimages/cel.jpg' %}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div>
+
+                                                <a href="{{ object.get_absolute_url }}" class="font-weight-bold h3 ">
+                                                    <b>{{ object.name }}</b>
+                                                </a>
+                                                {% if object.altname %}
+                                                <div class="promoter h5"><br><i class="fa fa-user"></i>&nbsp;
+                                                    <span class="h6">{{ object.prefix|default:"" }}.{{ object.altname|default:"" }}</span>
+                                                </div>
+                                                {% endif %}
+                                                <div class="address h5"><i class="fa-solid fa-location-dot"></i>&nbsp;
+                                                    <span class="h6">{{ object.door_no|default:'' }}, {{ object.street_name|default:'' }}, {{ object.area|default:'' }}, {{ object.city|default:'' }}, {{ object.pincode|default:'' }}</span>
+                                                </div>
+                                                <div class="phone h5"><i class="fa fa-solid fa-phone"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="{{ object.get_absolute_url }}">{{ object.mobile_number|slice:4 }}XXXXXX</a></span>
+                                                </div>
+                                                    <button class="btn button1 btn-solid "><a
+                                                            href="mailto:{{ object.email }}"><span
+                                                            class="button1 span1">Email</span></a></button>&nbsp;
+                                                {% if request.user.is_authenticated %}
+                                                    {% if object.pk in wishlist %}
+                                                    <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user_wishlist' object.slug %}">
+                                                          <span id="wishlistText" class="button1 span1">Remove from Prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                      {% else %}
+                                                      <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user_wishlist' object.slug %}">
+                                                          <span id="wishlistText" class="button1 span1">Add to prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                      {% endif %}
+                                                {% else %}
+                                                    <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user-login' %}">
+                                                          <span id="wishlistText" class="button1 span1">Add to Prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {#    custom  #}
+            {% else %}
+            <section class="section-b-space ratio_asos section1">
+                <div class="collection-wrapper">
+                    <div class="container">
+                        <div class="product-wrapper-grid list-view">
+                            <div class="">
+                                <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                {% if object.logo %}
+                                                    <img src="{{ object.logo.url }}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% else %}
+                                                    <img src="{% static 'webimages/cel.jpg' %}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div>
+
+                                                <a href="{{ object.get_person_url }}" class="font-weight-bold h3 ">
+                                                    <b>{{ object.prefix|default:'' }}.{{ object.name|default:'' }}</b>
+                                                </a>
+                                                {% if object.altname %}
+                                                <div class="promoter h5"><br><i class="fa fa-briefcase"></i>&nbsp;
+                                                    <span class="h6">{{ object.altname|default:"" }}</span>
+                                                </div>
+                                                {% endif %}
+                                                <div class="address h5"><i class="fa-solid fa-location-dot"></i>&nbsp;
+                                                    <span class="h6">{{ object.door_no|default:'' }}, {{ object.street_name|default:'' }}, {{ object.area|default:'' }}, {{ object.city|default:'' }}, {{ object.pincode|default:'' }}</span>
+                                                </div>
+                                                <div class="phone h5"><i class="fa fa-solid fa-phone"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="{{ object.get_person_url }}">{{ object.mobile_number|slice:4 }}XXXXXX</a></span>
+                                                </div>
+
+                                                    <button class="btn button1 btn-solid "><a
+                                                            href="mailto:{{ object.email }}"><span
+                                                            class="button1 span1">Email</span></a></button>&nbsp;
+                                                    {% if request.user.is_authenticated %}
+                                                    {% if object.pk in wishlist %}
+                                                    <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user_wishlist' object.slug %}">
+                                                          <span id="wishlistText" class="button1 span1">Remove from Prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                      {% else %}
+                                                      <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user_wishlist' object.slug %}">
+                                                          <span id="wishlistText" class="button1 span1">Add to prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                      {% endif %}
+                                                {% else %}
+                                                    <button class="btn button1 btn-solid" >
+                                                        <a href="{% url 'user-login' %}">
+                                                          <span id="wishlistText" class="button1 span1">Add to Prospects list</span>
+                                                        </a>
+                                                      </button>
+                                                {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="collection-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-md-12 alert alert-dark">
+                            <h3 class="d-flex justify-content-center text-dark">No results found in firms! &nbsp;&nbsp;</h3>
+                            <h2 class="d-flex justify-content-center"><a href="{% url 'index' %}">Try another
+                                keyword.</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+

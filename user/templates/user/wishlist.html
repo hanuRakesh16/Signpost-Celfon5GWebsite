@@ -1,0 +1,687 @@
+{% extends 'main.html' %} 
+{% load static %} 
+{% block content %}
+<style>
+  .section1 {
+    background-color: lightcyan;
+    margin: 30px;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+  }
+  .title {
+    color: #ff4c3b;
+  }
+  .section {
+    margin: 30px;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .span1 {
+    color: aliceblue;
+  }
+
+  .button1:hover {
+    color: #000000;
+  }
+ 
+#u {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+#l {
+  float: right;
+}
+
+
+#l a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  }
+
+.select_box{
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid black;
+}
+
+#balance_points{
+  float: left;
+}
+/* premium tag */
+.ribbon span {
+    font-size: 25px;
+    font-weight: bold;
+    color: #FFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 30px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(0deg);
+    width: 200px;
+    display: block;
+    background: var(--theme-deafult);
+    -webkit-box-shadow: 0 3px 10px -5px black;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 3px 10px -5px black;
+    position: absolute;
+    top: -10px;
+    left: -41px;
+    z-index: 1;
+}
+
+</style>
+<section class="section-b-space ratio_asos section">
+  <div class="collection-wrapper">
+    <div class="container">
+      <div class="product-wrapper-grid list-view">
+        <div class="col-xl-12 col-sm-12 col-12 col-lg-12">
+          <div class="bg-color1 m-0 p-1">
+            <h3 class="d-flex justify-content-center text-dark">
+              Celfon5G+ Prospects &nbsp;&nbsp;
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<form method="GET" id="wishlist_form" data-email-url="{% url 'ajax_load_email' %}" data-mobile-url="{% url 'ajax_load_mobile' %}" data-checkbalance-url="{% url 'check_values' %}" data-detectbalance-url="{% url 'detect_values' %}" data-prospect-length="{{prospects_length}}">
+  {% csrf_token %}
+  <div class="container">
+    <ul id="u">
+      <li id="l">
+        <button type="button" disabled="true" id="wa" class="btn button1 btn-solid probtn" value="bulk_whatsapp" style='font-size:10px' ><span class="button1 span1"><i class="fa-brands fa-whatsapp" style='font-size:22px'></i></span></button>&nbsp;<br>
+        
+        <div class="modal fade" id="bulk_whatsapp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bulk_whatsappLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="bulk_whatsappLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h3>This is an Bulk Whatsapp option that redirects to your whatsapp with selected recipients. This process costs of
+                {% for value in creditvalues %}
+                    {{value.bulk_whatsapp}} credit points per selected firm from your wallet.
+                {% endfor %}</h3>
+                <h4>Do you wanţ to proceed?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+                <a id="waLink" class="active" target="_blank"><button type="button" class="btn button1 btn-solid proceedbtn" name="proceed_butn" value="bulk_whatsapp">Proceed</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li id="l">       
+        <button type="button" id="mail" class="btn button1 btn-solid probtn" value="bulk_email" style='font-size:10px'><span class="button1 span1"><i class="fa-solid fa-envelope" style='font-size:22px'></i></span></button>&nbsp;<br>
+
+        <div class="modal fade" id="bulk_email" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bulk_emailLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="bulk_emailLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h3>This is an Bulk Email option that redirects to your mail application with selected recipients. This process costs of
+                {% for value in creditvalues %}
+                    {{value.bulk_email}} credit points per selected firm from you wallet.
+                {% endfor %}</h3>
+                <h4>Do you wanţ to proceed?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+                <a id="emailLink" class="active" href="mailto:?subject=Enquiry through Celfon5G+&body= (Ref : Celfon5G+)" target="_blank"><button type="button" class="btn button1 btn-solid proceedbtn" name="proceed_butn" value="bulk_email">Proceed</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li id="l">
+        <button type="button" id="sms_id" class="btn button1 btn-solid probtn" value="bulk_sms" style='font-size:10px'><span class="button1 span1"><i class="fas fa-sms" style='font-size:22px'></i></span></button>&nbsp;<br>
+        
+        <div class="modal fade" id="bulk_sms" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bulk_smsLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="bulk_smsLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h3> This is an Bulk SMS option that redirects to your SMS application with selected recipients. This process costs of
+                {% for value in creditvalues %}
+                    {{value.bulk_sms}} credit points per selected firm from you wallet.
+                {% endfor %}</h3>
+                <h4>Do you wanţ to proceed?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+                <a id="msg" href="sms:?body= (Ref : Celfon5G+)" target="_blank"><button type="button" class="btn button1 btn-solid proceedbtn" name="proceed_butn" value="bulk_sms">Proceed</button></a></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li id="l">
+        <button type="button" id="download_id" class="btn button1 btn-solid probtn" value="download" style='font-size:10px' data-bs-toggle="modal"><span class="button1 span1"><i class="fa-solid fa-download" style='font-size:22px'></i></span></button>&nbsp;
+        <div class="modal fade" id="bulk_download" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="downloadLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="bulk_downloadLabel">Confirm</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h3> This option allows you to download all data from your wishlist as CSV file. This process costs of
+              {% for value in creditvalues %}
+                  {{value.download}} credit points for each from your wallet.
+              {% endfor %}</h3>
+              <h4>Do you wanţ to proceed?</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+              <a id="downLink" href=" {% url 'download_details' %}" target="_blank" ><button type="button" class="btn button1 btn-solid proceedbtn" id="proceed-btn" name="proceed_butn" value="download">Proceed</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </li>
+      <li id="balance_points"><h2 class="fw-bold" style="text-align:left;color:#ff4c3b;">Credit Points : <span id="credit_value">{{current_value.credit_points}}</span></h2></li>
+    </ul>
+    <br><br>
+      <div class="form-check d-flex justify-content-end" style="font-size: 20px">
+        <input class="form-check-input" type="checkbox" value="" id="select_all_checkbox">
+        <span class="form-check-label fw-bold">
+          &nbsp;Select All
+        </span>
+      </div>
+  </div>
+
+{% if wishlist %}  {% for object in wishlist %} {% if object.detailType == 'F' %}
+{# custom #}
+<section class="section-b-space ratio_asos section1 prospect_element">
+  <div class="collection-wrapper">
+    <div class="container">
+      <div class="product-wrapper-grid list-view">
+        <div class="">
+          <div class="col-sm-12 col-12 col-md-12 col-lg-12">
+            <div class="product-box w-100">
+        {% if object.listing_type == 'Premium' %}
+              <div class="ribbon">
+                <span>Premium</span>
+            </div>
+          {% endif %}
+              <div class="img-wrapper">
+                <div class="front">
+                  {% if object.logo %}
+                  <img
+                    src="{{ object.logo.url }}"
+                    class="img-fluid blur-up lazyload bg-img"
+                    alt="Image"
+                  />
+                  {% else %}
+                  <img
+                    src="{% static 'webimages/cel.jpg' %}"
+                    class="img-fluid blur-up lazyload bg-img"
+                    alt="Image"
+                  />
+                  {% endif %}
+                </div>
+              </div>
+              
+              <div class="product-detail w-100">
+                <div class="d-flex flex-row justify-content-between">
+
+                  <a
+                    href="{{ object.get_absolute_url }}"
+                    class="font-weight-bold h3 title"
+                  >
+                  {% if object.listing_type == 'Premium' %}
+                    <b>{{ object.name }} <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 20px;"></i></b>
+                    {% else%}
+                    <b>{{ object.name }}</b>
+                    {% endif %}
+                  </a>
+
+                <input type="checkbox" class="form-check-input select_box" data-objid="{{object.pk}}" id="select_box" name="selectbox">
+
+                </div>
+                  <div class="promoter h5">
+                    <br /><i class="fa fa-user"></i>&nbsp;
+                    <span class="h6">{{ object.prefix |default:" " }}.{{object.altname|default:"Not Available" }}</span>
+                  </div>
+                  <div class="address h5">
+                    <i class="fa-solid fa-location-dot"></i>&nbsp;
+                    <span class="h6">
+                      {{ object.door_no|default:'' }},{{ object.street_name|default:'' }},{{ object.area|default:'' }},{{ object.city|default:'' }},{{ object.pincode|default:'' }}
+                    </span>
+                  </div>
+                  <div class="phone h5">
+                    <i class="fa fa-solid fa-phone"></i>&nbsp;
+                    <span class="h6">
+                      <a href="{{ object.get_absolute_url }}">{{ object.mobile_number|slice:4 }}XXXXXX</a>
+                    </span>
+                  </div>
+                  <div class="icon">
+                    <a href="mailto:{{ object.email }}?subject=Enquiry through Celfon5G+&body= (Ref : Celfon5G+)" class="obj_email" target="_blank"><button type="button" class="btn button1 btn-solid" style='font-size:10px'><span class="button1 span1"><i class="fa-solid fa-envelope" style='font-size:22px'></i></span></button></a>&nbsp;
+                      {% comment %} <div class="modal fade" id="email" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="emailLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="email">Confirm</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <h3>This will allow you to send mail for this firm. This process costs of
+                              {% for value in creditvalues %}
+                                  {{value.email}} credit points from your wallet.
+                              {% endfor %}</h3>
+                              <h4>Do you wanţ to proceed?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn button1 btn-solid proceedbtn" id="proceed-btn" name="proceed_butn" value="email">Proceed</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div> {% endcomment %}
+                      
+                      <a href="https://wa.me/{{ object.mobile_number }}"  target="_blank"><button type="button" class="btn button1 btn-solid" style='font-size:10px'><span class="button1 span1"><i class="fa-brands fa-whatsapp" style='font-size:22px'></i></span></button></a>&nbsp;
+                      {% comment %} <div class="modal fade" id="whatsapp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="whatsappLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="whatsappLabel">Confirm</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <h3>This will allow you to send whatsapp message for this firm. This process costs of
+                              {% for value in creditvalues %}
+                                  {{value.whatsapp}} points
+                              {% endfor %}</h3>
+                              <h4>Do you wanţ to proceed?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn button1 btn-solid proceedbtn" id="proceed-btn" name="proceed_butn" value="whatsapp">Proceed</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div> {% endcomment %}
+                     
+                      <a href="sms:{{ object.mobile_number }}?body= (Ref : Celfon5G+)" class="obj_sms" target="_blank"><button type="button" class="btn button1 btn-solid" style='font-size:10px'><span class="button1 span1"><i class="fas fa-sms" style='font-size:22px'></i></span></button></a>&nbsp;<br>
+                      {% comment %} <div class="modal fade" id="sms" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="smsLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="smsLabel">Confirm</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <h3>This will allow you to send whatsapp message for this firm. This process costs of
+                              {% for value in creditvalues %}
+                                  {{value.sms}} points
+                              {% endfor %}</h3>
+                              <h4>Do you wanţ to proceed?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn button1 btn-solid proceedbtn" id="proceed-btn" name="proceed_butn" value="sms">Proceed</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div> {% endcomment %}
+                      <br>
+                      <button class="btn button1 btn-solid"><a href="{% url 'user_wishlist' object.slug %}"  style="color: #FFF;">remove from prospects list</a></button>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{# custom #} {% else %}
+<section class="section-b-space ratio_asos section1 prospect_element">
+  <div class="collection-wrapper">
+    <div class="container">
+      <div class="product-wrapper-grid list-view">
+        <div class="">
+          <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+            <div class="product-box">
+              <div class="img-wrapper">
+                <div class="front">
+                  {% if object.logo %}
+                  <img
+                    src="{{ object.logo.url }}"
+                    class="img-fluid blur-up lazyload bg-img"
+                    alt="Image"
+                  />
+                  {% else %}
+                  <img
+                    src="{% static 'webimages/cel.jpg' %}"
+                    class="img-fluid blur-up lazyload bg-img"
+                    alt="Image"
+                  />
+                  {% endif %}
+                </div>
+              </div>
+              <div class="product-detail">
+                <div>
+                  <a
+                    href="{{ object.get_person_url }}"
+                    class="font-weight-bold h3">
+                    <b>{{ object.prefix|default:'' }}.{{ object.name|default:'Not Available' }}</b>
+                  </a>
+
+                  <div class="promoter h5">
+                    <br /><i class="fa fa-briefcase"></i>&nbsp;
+                    <span class="h6">{{ object.altname|default:"Not Available" }}</span>
+                  </div>
+                  <div class="address h5">
+                    <i class="fa-solid fa-location-dot"></i>&nbsp;
+                    <span class="h6">{{ object.door_no|default:'' }},{{ object.street_name|default:'' }},{{ object.area|default:'' }},{{ object.city|default:'' }},{{ object.pincode|default:'' }}</span>
+                  </div>
+                  <div class="phone h5">
+                    <i class="fa fa-solid fa-phone"></i>&nbsp;
+                    <span class="h6"><a href="{{ object.get_person_url }}">{{ object.mobile_number|slice:4 }}XXXXXX</a></span>
+                  </div>
+                  <div>
+                    <br />
+                    <button class="btn button1 btn-solid">
+                      <a href="mailto:{{ object.email }}"><span class="button1 span1">Email</span></a></button>&nbsp;
+                      <button class="btn button1 btn-solid" >
+                        <a href="{% url 'user_wishlist' object.slug %}">Remove from Prospects list </a>
+                      </button>&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %} {% endfor %}</form> {% else %}
+<div class="collection-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-md-12 alert alert-dark">
+          <h3 class="d-flex justify-content-center text-dark">
+           Your wishlist is empty! &nbsp;&nbsp;
+          </h3>
+          <h2 class="d-flex justify-content-center">
+            <a href="{% url 'index' %}">Add firms to prospects list</a>
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<div class="modal fade" id="alert_checkbox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="alert_checkboxLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alert_checkboxLabel">Alert!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Select atleast Two prospects list</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="alert_balance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="alert_balanceLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alert_balanceLabel">Credit Points</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Insufficient Balance</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn button1 btn-solid" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+<script>
+    const no_of_prospects = $("#wishlist_form").attr("data-prospect-length");
+    $('.select_box').click(function() {
+        let selected_checkboxes = $('input[name=selectbox]:checked').length;
+        if(parseInt(no_of_prospects) === selected_checkboxes){
+              $('#select_all_checkbox').prop("checked", true)
+            } else {
+              $('#select_all_checkbox').prop("checked", false)
+            }
+    });
+
+    function set_bulk_email(email_url, obj_id, email_href) {
+      $.ajax({
+        url: email_url,
+        data: {
+          'obj_id': obj_id
+        },
+        success: function (data) {
+          if (~email_href.indexOf(data)) {
+            let new_e_href = $("#emailLink").attr("href").replace(data, "")
+            $("#emailLink").attr("href", new_e_href);
+          } else {
+            let emaildata = email_href.slice(0, 7) + data + email_href.slice(7);
+            $("#emailLink").attr("href", emaildata);
+          }
+
+        }
+      });
+    }
+
+    function set_bulk_sms(mobile_url, obj_id, mobile_href) {
+      $.ajax({
+        url: mobile_url,
+        data: {
+          'obj_id': obj_id
+        },
+        success: function (data) {
+          if (~mobile_href.indexOf(data)) {
+            let new_m_href = $("#msg").attr("href").replace(data, "")
+            $("#msg").attr("href", new_m_href);
+          } else {
+            let smsdata = mobile_href.slice(0, 4) + data + mobile_href.slice(4);
+            $("#msg").attr("href", smsdata);
+
+          }
+
+        }
+      });
+    }
+
+    $(".select_box").change(function () {
+            let selected_checkboxes = $('input[name=selectbox]:checked').length;
+            const email_url = $("#wishlist_form").attr("data-email-url");
+            const mobile_url = $("#wishlist_form").attr("data-mobile-url");
+            let email_href = $("#emailLink").attr("href");
+            let mobile_href = $("#msg").attr("href");
+            let obj_id = $(this).data("objid");
+            set_bulk_email(email_url, obj_id, email_href);
+            set_bulk_sms(mobile_url, obj_id, mobile_href);
+
+        });
+  
+  $(".proceedbtn").click(function () {
+          const url = $("#wishlist_form").attr("data-detectbalance-url");
+          let value = $(this).attr("value");
+          let checkboxes = $('input[name=selectbox]:checked').length;
+          $.ajax({
+              url: url,
+              data: {
+                  'value': value,
+                  'checkboxes': checkboxes
+              },
+              success: function (data) {
+                location.reload();
+                //console.log(data)
+
+              }
+          });
+      });
+
+  $(".probtn").click(function () { 
+        const url = $("#wishlist_form").attr("data-checkbalance-url");
+        let value = $(this).attr("value");
+        var checkboxes = $('input[name=selectbox]:checked').length;
+        $.ajax({
+            url: url,
+            data: {
+                'value': value,
+                'checkboxes': checkboxes
+            },
+            success: function (data) {
+              if (data.available_value <= data.required_value)
+              {
+                $("#alert_balance").modal("show");
+              }
+              else
+              {
+                // if (value == 'email')
+                // {
+                //   $("#email").modal("show");
+                // }
+                // else if (value == 'whatsapp')
+                // {
+                //   $("#whatsapp").modal("show");
+                // }
+                // else if (value == 'sms')
+                // {
+                //   $("#sms").modal("show");
+                // }
+
+                if (value === 'download')
+                {
+
+                  let selected_checkboxes = $('input[name=selectbox]:checked').length;
+                  if(selected_checkboxes > 1){
+                    $("#bulk_download").modal("show");
+                  } else {
+                    $("#alert_checkbox").modal("show");
+                  }
+                }
+                else if (value == 'bulk_email')
+                {
+                  $("#mail").click(function() {
+                    let email_href = $("#emailLink").attr("href");
+                      if ((email_href.match(new RegExp(";", "g")) || []).length > 1) {
+                        $("#bulk_email").modal("show");
+                      }
+                      else {
+                        $("#alert_checkbox").modal("show");
+                      }
+                    });
+                }
+                else if (value == 'bulk_whatsapp')
+                {
+                  $("#wa").click(function() {
+                    let whats_href = $("#waLink").attr("href");
+                      if (whats_href.length > 8) {
+                        $("#bulk_whatsapp").modal("show");
+                    }
+                      else {
+                        $("#alert_checkbox").modal("show");
+                    }
+                    });
+                }
+                else if (value == 'bulk_sms')
+                {
+                  $("#sms_id").click(function() {
+                    let mobile_href = $("#msg").attr("href");
+                      if ((mobile_href.match(new RegExp(",", "g")) || []).length > 1)  {
+                        $("#bulk_sms").modal("show");
+                    }
+                      else {
+                        $("#alert_checkbox").modal("show");
+                    }
+                    });
+                }
+                
+              }
+
+            }
+        });
+    });
+  $('#select_all_checkbox').change(function () {
+    if($('#select_all_checkbox').is(':checked')){
+      $('.prospect_element').each(function() {
+        const email_url = $("#wishlist_form").attr("data-email-url");
+        const mobile_url = $("#wishlist_form").attr("data-mobile-url");
+        const obj_id = $(this).find('.select_box').data('objid')
+        $.ajax({
+        url: email_url,
+        data: {
+          'obj_id': obj_id
+        },
+        success: function (data) {
+          let email_href = $("#emailLink").attr("href");
+          if (email_href.indexOf(data)) {
+            let emaildata = email_href.slice(0, 7) + data + email_href.slice(7);
+            $("#emailLink").attr("href", emaildata);
+          }
+
+        }
+      });
+        $.ajax({
+        url: mobile_url,
+        data: {
+          'obj_id': obj_id
+        },
+        success: function (data) {
+          let mobile_href = $("#msg").attr("href");
+          if (mobile_href.indexOf(data)) {
+            let mobiledata = mobile_href.slice(0, 4) + data + mobile_href.slice(4);
+            $("#msg").attr("href", mobiledata);
+          }
+
+        }
+      });
+      })
+      $('.select_box').each(function (){
+        $(".select_box").prop('checked', true)
+      })
+    } else {
+      $("#emailLink").attr("href", 'mailto:?subject=Enquiry through Celfon5G+&body= (Ref : Celfon5G+)');
+      $("#msg").attr('href', 'sms:?body= (Ref : Celfon5G+)')
+      $('.select_box').each(function (){
+        $(".select_box").prop('checked', false)
+      })
+    }
+  })
+</script>
+{% endblock %}

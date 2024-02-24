@@ -1,0 +1,800 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load widget_tweaks %}
+{% block content %}
+    <style>
+    .alert-danger{
+        padding: 2px;
+    }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .invalid-feedback{
+            display: none;
+        }
+        .select2{
+            width: 100% !important;
+        }
+        .wrapper {
+            width: 100%;
+            background: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .05);
+            overflow: hidden;
+        }
+
+        h1.title {
+            padding: 15px 0;
+            margin-left: 25px;
+            font-weight: normal;
+            color: rgba(57, 50, 173, 1)
+        }
+
+        .form {
+            width: 100%;
+        }
+
+        .myform {
+            background: #F4F5F7;
+            width: 100%;
+            padding: 25px;
+        }
+
+        .myform label {
+            display: block;
+            color: #3F3F3F;
+            font-weight: bold;
+            font-size: .8rem;
+            margin-bottom: 10px;
+        }
+
+        .myform input[type="text"], input[type="file"],
+        input[type="number"], input[type="email"], select[type="text"] {
+            border: 0;
+            outline: 0;
+            height: 50px;
+            background: #FFF;
+            width: 100%;
+            border-radius: 5px;
+            color: #155BDA;
+            font-weight: 700;
+            font-size: .9rem;
+            text-indent: 15px;
+            border: 2px solid transparent;
+            transition: border 250ms;
+        }
+
+        .full-width {
+            grid-column: -1 / 1
+        }
+
+        .button {
+            grid-column: -1 / 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button button {
+            border: 0;
+            outline: 0;
+            width: 120px;
+            height: 50px;
+            border-radius: 50px;
+            color: #FFF;
+            font-weight: bold;
+            font-size: .9rem;
+            cursor: pointer;
+            background: linear-gradient(356deg, rgba(57, 50, 173, 1) 0%, rgba(87, 50, 173, 1) 100%);
+        }
+
+        .button button:hover {
+            background: rgba(57, 50, 173, 1);
+        }
+        @media only screen and (min-width: 768px) {
+            .product {
+                width: 100%;
+            }
+        }
+        @media only screen and (min-width: 400px) {
+        .product {
+            width: 100%;
+        }
+        }
+        @media (prefers-reduced-motion: reduce){
+.product {
+    transition: none;
+}}
+
+    </style>
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-2">
+                <h3><a href="{% url 'tasks' %}" class="btn btn-danger">Go Back</a></h3>
+            </div>
+        </div>
+    </div>
+    <div class=" container wrapper">
+        <div class="form">
+            <h1 class="title text-center">Add Firm</h1>
+{% for message in messages %}
+                <div class="alert alert-danger">
+                    <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+{#            {{ form.errors }}#}
+            <hr>
+            <div class="form-group myform">
+                <form method="post" id="addform" action="{% url 'task-create' %}" enctype="multipart/form-data"
+                      data-cities-url="{% url 'ajax_load_cities' %}" data-cat-url="{% url 'ajax_load_cat' %}"
+                      data-p-url="{% url 'ajax_load_p' %}">
+                    {% csrf_token %}
+{#                            {{ form|crispy}}#}
+                    <div class="row">
+                        <h3 class="title">Business Details</h3>
+                        <hr>
+                        <div class="col-lg-12" id="div_id_business_name">
+                            {{ form.business_name.label_tag }}
+{#                            {{ form.business_name.errors }}#}
+                            {{ form.business_name }}
+{#                            {% render_field form.business_name class="form-control" maxlength="100" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form.door_no.label_tag }}
+                            {{ form.door_no}}
+{#                            <label>{{ form.door_no.label }}*</label>#}
+{#                            {% render_field form.door_no class="form-control" maxlength="100" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.street_name|as_crispy_field}}
+{#                            <label>{{ form.street_name.label }}*</label>#}
+{#                            {% render_field form.street_name class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.building_name|as_crispy_field}}
+{#                            <label>{{ form.building_name.label }}</label>#}
+{#                            {% render_field form.building_name class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form.area|as_crispy_field}}
+{#                            <label>{{ form.area.label }}*</label>#}
+{#                            {% render_field form.area class="form-control" maxlength="100" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.landmark|as_crispy_field}}
+{#                            <label>{{ form.landmark.label }}</label>#}
+{#                            {% render_field form.landmark class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.city|as_crispy_field}}
+{#                            <label>{{ form.city.label }}*</label>#}
+{#                            {% render_field form.city class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form.state|as_crispy_field}}
+{#                            <label>{{ form.state.label }}*</label>#}
+{#                            {% render_field form.state class="form-control" maxlength="100" type="dropdown" id="id_state" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.district|as_crispy_field}}
+{#                            <label>{{ form.district.label }}*</label>#}
+{#                            {% render_field form.district class="form-control" type="dropdown" id="id_city" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.pincode|as_crispy_field}}
+{#                            <label>{{ form.pincode.label }}*</label>#}
+{#                            {% render_field form.pincode class="form-control" pattern=".{6}" required="required" title="6 characters minimum" type="number" id="pincode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="6" %}#}
+                            <small id="numberHelp" class="form-text text-muted">Enter 6 digit pincode.</small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form.office_mobile|as_crispy_field}}
+{#                            <label>{{ form.office_mobile.label }}*</label>#}
+{#                            {% render_field form.office_mobile class="form-control phone" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" type="number" id="ph" %}#}
+{#                            <input type="text" id="country" name="country" value={{ mobile }} readonly>#}
+                            <small id="numberHelp" class="form-text text-muted">Enter 10 digit mobile number.</small>
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form.std_code|as_crispy_field}}
+{#                            <label>{{ form.std_code.label }}</label>#}
+{#                            {% render_field form.std_code class="form-control office_phone" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" id="off" %}#}
+                            <small id="numberHelp" class="form-text text-muted">Area Code</small>
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.office_number|as_crispy_field}}
+{#                            <label>{{ form.office_number.label }}</label>#}
+{#                            {% render_field form.office_number class="form-control office_phone" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" id="off" %}#}
+                            <small id="numberHelp" class="form-text text-muted">Landline Number</small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form.email|as_crispy_field}}
+{#                            <label>{{ form.email.label }} *</label>#}
+{#                            {% render_field form.email class="form-control" maxlength="100" type="email" id="exampleInputUsername" %}#}
+                            <small id="numberHelp" class="form-text text-muted">Enter valid email.</small>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form.website|as_crispy_field}}
+{#                            <label>{{ form.website.label }}</label>#}
+{#                            {% render_field form.website class="form-control" type="text" id="exampleInputUsername" %}#}
+                            <small id="numberHelp" class="form-text text-muted">Enter website with "www" as prefix.
+                                (Eg:www.sample.com)</small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h3 class="title">Contact Person Details</h3>
+                        <hr>
+                        <div class="col-lg-2">
+                            {{ form.prefix|as_crispy_field}}
+{#                            <label>{{ form.prefix.label }}*</label>#}
+{#                            {% render_field form.prefix class="form-control" maxlength="100" type="dropdown" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-5">
+                            {{ form.promoter|as_crispy_field}}
+{#                            <label>{{ form.promoter.label }}*</label>#}
+{#                            {% render_field form.promoter class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-5">
+                            {{ form.promoter_designation|as_crispy_field}}
+{#                            <label>{{ form.promoter_designation.label }}</label>#}
+{#                            {% render_field form.promoter_designation class="form-control" type="text" id="exampleInputUsername" %}#}
+                            <small id="numberHelp" class="form-text text-muted">Eg: Proprietor, Manager, Staff,
+                                etc.,</small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form.mobile_number|as_crispy_field}}
+{#                            <label>{{ form.mobile_number.label }}*</label>#}
+{#                            {% render_field form.mobile_number class="form-control phone" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" type="number" id="ph" %}#}
+{#                            <input type="text" id="country" name="country" value={{ mobile }} readonly>#}
+                            <small id="numberHelp" class="form-text text-muted">Enter 10 digit mobile number.</small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h3 class="title">Business Activity</h3>
+                        <hr>
+                        <div class="col-lg-6">
+                            <label>{{ form.label_tag }}</label>
+                            {{ form.nature|as_crispy_field}}
+{#                            <label>{{ form.nature.label }}*</label>#}
+{#                            {% render_field form.nature class="form-control" maxlength="100" type="dropdown" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form.firm_type|as_crispy_field}}
+{#                            <label>{{ form.firm_type.label }}*</label>#}
+{#                            {% render_field form.firm_type class="form-control" maxlength="100" type="dropdown" id="exampleInputUsername" %}#}
+                        </div>
+{#                        <div class="col-lg-6">#}
+{#                            <label>{{ form.description.label }}</label>#}
+{#                            {% render_field form.description class="form-control" type="text" id="exampleInputUsername" %}#}
+{#                        </div>#}
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form.description|as_crispy_field}}
+{#                            <label>{{ form.description.label }}</label>#}
+{#                            {% render_field form.description class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="details_div">
+                        <h3 class="title"> Products</h3>
+                        <br>
+                        <div class="row details_div_row first_details">
+                            <div class="col-lg-3 " >
+{#                                <label>Product 1*</label>#}
+                            {{ form.mproducts1|as_crispy_field}}
+{#                                {% render_field form.mproducts1 class="form-control product" name="mp1" type="text" id="id_products" %}#}
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Product Type</label>#}
+                                {{ form.mtype1|as_crispy_field}}
+{#                                {% render_field form.mtype1 class="form-control" name="mtype1" type="text" id="" %}#}
+{#                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>#}
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Sub Category</label>#}
+                                {{ form.msub_category1|as_crispy_field}}
+{#                                {% render_field form.msub_category1 class="form-control" name="msc1" type="text" id="id_sub_category" %}#}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Category</label>#}
+                                {{ form.mcategory1|as_crispy_field}}
+{#                                {% render_field form.mcategory1 class="form-control" name="mc1" type="text" id="id_category" %}#}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="row details_div_row first_details " id="add1" style="display: none;">
+                            <div class="col-lg-3 " style="width: 100%">
+{#                                <label>Product 2</label>#}
+                                {{ form.mproducts2|as_crispy_field}}
+{#                                {% render_field form.mproducts2 class="form-control product" name="mp2" type="text" id="id_products1" %}#}
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Product Type</label>#}
+                                {{ form.mtype2|as_crispy_field}}
+{#                                {% render_field form.mtype2 class="form-control" name="mtype1" type="text" id="" %}#}
+{#                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>#}
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Sub Category</label>#}
+                                {{ form.msub_category2|as_crispy_field}}
+{#                                {% render_field form.msub_category2 class="form-control" name="msc2" type="text" id="id_sub_category1" %}#}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Category</label>#}
+                                {{ form.mcategory2|as_crispy_field}}
+{#                                {% render_field form.mcategory2 class="form-control" name="mc2" type="text" id="id_category1" %}#}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row details_div_row first_details " id="add2" style="display: none">
+                            <div class="col-lg-3 " style="width: 100%">
+{#                                <label>Product 3</label>#}
+                                {{ form.mproducts3|as_crispy_field}}
+{#                                {% render_field form.mproducts3 class="form-control product" name="mp3" type="text" id="id_products2" %}#}
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Product Type</label>#}
+                                {{ form.mtype3|as_crispy_field}}
+{#                                {% render_field form.mtype3 class="form-control" name="mtype1" type="text" id="" %}#}
+{#                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>#}
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Sub Category</label>#}
+                                {{ form.msub_category3|as_crispy_field}}
+{#                                {% render_field form.msub_category3 class="form-control" name="msc3" type="text" id="id_sub_category2" %}#}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+{#                                <label>Category</label>#}
+                                {{ form.mcategory3|as_crispy_field}}
+{#                                {% render_field form.mcategory3 class="form-control" name="mc3" type="text" id="id_category2" %}#}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success" id="p1" onclick="toggleText()" style="display: flex">
+                        Add Product</button>
+                    <button type="button" class="btn btn-success" id="p2" onclick="toggleButton()" style="display: none">
+                        Add Product</button>
+                    <br>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form.visiting_card|as_crispy_field}}
+{#                            <label>{{ form.visiting_card.label }}</label>#}
+{#                            {% render_field form.visiting_card class="form-control" maxlength="100" type="file" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.logo|as_crispy_field}}
+{#                            <label>{{ form.logo.label }}</label>#}
+{#                            {% render_field form.logo class="form-control" type="file" id="exampleInputUsername" %}#}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form.video|as_crispy_field}}
+{#                            <label>{{ form.video.label }}</label>#}
+{#                            {% render_field form.video class="form-control" type="text" id="exampleInputUsername" %}#}
+                        </div>
+                    </div>
+                    <br>
+{#                    {% if form_2 %}#}
+{#                        <h3>Ecommerce Products</h3>#}
+{#                        {{ form_2|crispy }}#}
+{#                    {% endif %}#}
+                    <div class="mt-5 mb-3 d-flex justify-content-center"><input type="submit"
+                                                                                class="button btn btn-dark btn-success p-2 col-md-2"
+                                                                                value="SUBMIT"/></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"
+            integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"
+            integrity="sha512-TToQDr91fBeG4RE5RjMl/tqNAo35hSRR4cbIFasiV2AAMQ6yKXXYhdSdEpUcRE6bqsTiB+FPLPls4ZAFMoK5WA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+    <script>
+    /* OTP VERIFICATION  */
+    let otp_from_back="";
+     function ajax_send_otp(){
+        number = document.getElementById("ph");
+        console.log(number);
+      $.post("verify",
+          {
+              "number":number.value
+          },
+          function(data, status){
+              if(status=="success"){
+                  otp_from_back = data;
+                  }
+     }
+     );
+     }
+    function verify_otp(){
+        let user_otp=document.getElementById("otp").value;
+        if (user_otp==otp_from_back){
+            document.getElementById("verify_text_div").style.color="green";
+            document.getElementById("verify_text_div").innerHTML="OTP Verified";
+        }
+        else{
+            document.getElementById("verify_text_div").style.color="red";
+            document.getElementById("verify_text_div").innerHTML="Try Again!!";
+        }
+    }
+    /*  END   */
+        {#    State and districts #}
+        $("#id_state").change(function () {
+            const url = $("#addform").attr("data-cities-url");  // get the url of the `load_cities` view
+            const countryId = $(this).val();  // get the selected country ID from the HTML input
+
+            $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+                data: {
+                    'region_id': countryId       // add the country id to the GET parameters
+                },
+                success: function (data) {   // `data` is the return of the `load_cities` view function
+                    $("#id_district").html(data);  // replace the contents of the city input with the data that came from the server
+                }
+            });
+        });
+
+        {#  Manufacturing Products  #}
+        $("#id_mproducts1").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_msub_category1").html(data);
+                }
+            });
+        });
+        $("#id_mproducts1").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_mcategory1").html(data);
+                }
+            });
+        });
+        $("#id_mproducts2").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_msub_category2").html(data);
+                }
+            });
+        });
+        $("#id_mproducts2").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_mcategory2").html(data);
+                }
+            });
+        });
+        $("#id_dproducts3").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_dsub_category3").html(data);
+                }
+            });
+        });
+        $("#id_dproducts3").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_dcategory3").html(data);
+                }
+            });
+        });
+
+        {#  Dealing Products  #}
+        $("#id_dproducts").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_dsub_category").html(data);
+                }
+            });
+        });
+        $("#id_dproducts").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_dcategory").html(data);
+                }
+            });
+        });
+        $("#id_dproducts1").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_dsub_category1").html(data);
+                }
+            });
+        });
+        $("#id_dproducts1").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_dcategory1").html(data);
+                }
+            });
+        });
+        $("#id_dproducts2").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_dsub_category2").html(data);
+                }
+            });
+        });
+        $("#id_dproducts2").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_dcategory2").html(data);
+                }
+            });
+        });
+        {#  Supplying Products  #}
+        $("#id_sproducts").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_ssub_category").html(data);
+                }
+            });
+        });
+        $("#id_sproducts").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_scategory").html(data);
+                }
+            });
+        });
+        $("#id_sproducts1").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_ssub_category1").html(data);
+                }
+            });
+        });
+        $("#id_sproducts1").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_scategory1").html(data);
+                }
+            });
+        });
+        $("#id_sproducts2").change(function () {
+            const url = $("#addform").attr("data-cat-url");
+            const pId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'product_id': pId
+                },
+                success: function (data) {
+                    $("#id_ssub_category2").html(data);
+                }
+            });
+        });
+        $("#id_sproducts2").change(function () {
+            const url = $("#addform").attr("data-p-url");
+            const prId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'pr_id': prId
+                },
+                success: function (data) {
+                    $("#id_scategory2").html(data);
+                }
+            });
+        });
+
+        {# clone #}
+        $(".m_add_details").click(function () {
+            let m_details_row = $(".m_first_details").clone();
+            m_details_row.removeClass("m_first_details");
+            m_details_row.find(".m_product").val("");
+            $(".m_details_div").append(m_details_row);
+        });
+        $(".m_remove_details").click(function () {
+            if ($(".m_details_div").find(".m_details_div_row").length > 1) {
+                $(".m_details_div").children().last().remove();
+            }
+        });
+        $(".d_add_details").click(function () {
+            let d_details_row = $(".d_first_details").clone();
+            d_details_row.removeClass("d_first_details");
+            d_details_row.find(".d_product").val("");
+            $(".d_details_div").append(d_details_row);
+        });
+        $(".d_remove_details").click(function () {
+            if ($(".d_details_div").find(".d_details_div_row").length > 1) {
+                $(".d_details_div").children().last().remove();
+            }
+        });
+        $(".s_add_details").click(function () {
+            let s_details_row = $(".s_first_details").clone();
+            s_details_row.removeClass("s_first_details");
+            s_details_row.find(".s_product").val("");
+            $(".s_details_div").append(s_details_row);
+        });
+        $(".s_remove_details").click(function () {
+            if ($(".s_details_div").find(".s_details_div_row").length > 1) {
+                $(".s_details_div").children().last().remove();
+            }
+        });
+        /*
+                $(document).ready(function(){
+                $('.office_phone').inputmask('9999999999');
+            });
+         */
+        $(document).ready(function () {
+            $('#id_products,#id_products1,#id_products2,#id_dproducts,#id_dproducts1,#id_dproducts2,#id_sproducts,#id_sproducts1,#id_sproducts2').select2({
+                {#theme: bootstrap3Theme,#}
+                placeholder: 'Select an product',
+                tags: true,
+                tokenSeparators: [',', ' '],
+            });
+        });
+
+        function toggleText() {
+            let x = document.getElementById("add1");
+            let y = document.getElementById("p1");
+            let z = document.getElementById("p2");
+            x.style.display = "flex";
+            y.style.display = "none";
+            z.style.display = "flex";
+        }
+        function toggleButton() {
+            let x = document.getElementById("add2");
+            {#let y = document.getElementById("p1");#}
+            let z = document.getElementById("p2");
+            x.style.display = "flex";
+            {#y.style.display = "none";#}
+            z.style.display = "none";
+        }
+    </script>
+
+
+{% endblock %}

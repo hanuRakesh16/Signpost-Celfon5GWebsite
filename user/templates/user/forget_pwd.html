@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--section start-->
+    <section class="pwd-page section-b-space">
+        <div class="container">
+            {% if messages %}
+            <div class="alert alert-{{ messages.tags }}" role="alert">
+            {% for message in messages %}
+                <p class="lead text-danger text-bold">{{ message }}</p>
+            {% endfor %}
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-6 m-auto">
+                    <h2>Enter your Mobile Number</h2>
+                    <form class="theme-form" method="post" action="{% url 'forgot_pwd' %}">
+                        {% csrf_token %}
+                        <div class="form-row row">
+                            <div class="col-md-12">
+                                <input type="text" name="username" class="form-control" id="email" placeholder="Username / Mobile Number"
+                                    required="">
+                            </div><button type="submit" class="btn btn-solid w-auto">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section ends-->
+{% endblock %}

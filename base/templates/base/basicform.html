@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<!--                <form id="BasicForm" method="post" data-cities-url="{% url 'ajax_load_cities' %}">-->
+<!--                    <h1></h1>-->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning" role="alert">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h3 style="text-align: center;">Add Firm(TM)</h3>
+                <div class="theme-card">
+                <form id="BasicForm" method="post" enctype="multipart/form-data" data-cities-url="{% url 'ajax_load_cities' %}" data-cat-url="{% url 'ajax_load_cat' %}"
+                  data-p-url="{% url 'ajax_load_p' %}" data-check-mobile-url="{% url 'check_mobile' %}">
+                        {% csrf_token %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phoneNumber" class="form-label">Mobile Number:<span class="tt" data-bs-placement="top" title="Type 10 digits continuously. No gap between digits. No country code. No +91 prefix etc.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                     {% render_field form.mobile_number class="form-control phone" pattern="(0|91)?[6-9][0-9]{9}" required="required" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" type="number" id="ph" aria-describedby="button-addon2"%}
+<!--                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>-->
+                                    <p class="text-danger" id="mobile_err"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bname" class="form-label">Firm Name:<span class="tt" data-bs-placement="top" title="Spell/Type as in Visiting Card. Use abbrevations located alphabetically as typed.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.name class="form-control" data-rule-minlength="2" data-rule-maxlength="45" data-msg-minlength="At least two chars" data-msg-maxlength="max 45 chars" maxlength="45" type="text" id="bname" %}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bname" class="form-label">Door no:<span class="tt" data-bs-placement="top" title="Do not type - D.No.,#, Site.No. etc.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.door_no class="form-control" maxlength="100" type="text" id="exampleInputUsername" maxlength="15"%}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="streetName" class="form-label">Street Name:<span class="tt" data-bs-placement="top" title="Type only Road, Street names. Use abbrevations - Rd, St, Ngr, LO. etc.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.street_name class="form-control" type="text" id="exampleInputUsername" %}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">   
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="id_email">Bldg floor:<span class="tt" data-bs-placement="top" title="Type name of Apartment, Building, Floor, Flat number, etc. Use abbrevations - Apt, Bldg, Flr.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.building_name class="form-control" type="text" id="exampleInputUsername" %}
+                                    </div>
+                                </div>                           
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phoneNumber" class="form-label">Area:<span class="tt" data-bs-placement="top" title="Local Area Name, Ward Name or Postal Area Name.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.area class="form-control" maxlength="100" type="text" id="exampleInputUsername" %}        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="streetName" class="form-label">Landmark:<span class="tt" data-bs-placement="top" title="Type Near, Opposite, Front of, Next to, etc of well known place.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.landmark class="form-control" type="text" id="exampleInputUsername" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city" class="form-label">City:<span class="tt" data-bs-placement="top" title="Type correct city name as officialy known. Don't use short form. (Eg: Don't type CBE, kovai. Type as Coimbatore.)">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.city class="form-control" type="text" id="exampleInputUsername" %}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">State:<span class="tt" data-bs-placement="top" title="Select State from the dropdown">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.state class="form-control" maxlength="100" type="dropdown" id="id_state" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city" class="form-label">District:<span class="tt" data-bs-placement="top" title="Select district from Dropdown">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.district class="form-control" maxlength="100" type="dropdown" id="id_city" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pincode" class="form-label">Pincode:<span class="tt" data-bs-placement="top" title="Type all 6 digits continuously. Do not leave any gap between digits.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.pincode class="form-control" pattern=".{6}" required="required" title="6 characters minimum" type="number" id="pincode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="6" %}
+                                    </div>        
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">STD:<span class="tt" data-bs-placement="top" title="Mention only if Landline is typed next.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.std_code class="form-control office_phone" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" id="std" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Landline:<span class="tt" data-bs-placement="top" title="Type all digits without any gap in between for office Landline.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.landline class="form-control office_phone" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" id="office_mobile" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="id_email">Email:<span class="tt" data-bs-placement="top" title="Enter an Valid Email Address ">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.email class="form-control" maxlength="100" type="email" id="exampleInputUsername" %}
+                                    </div>
+                                    </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pincode" class="form-label">Website :<span class="tt" data-bs-placement="top" title="Enter Website with prefix 'www.'">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.website class="form-control" type="text" id="exampleInputUsername" %}
+                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="prefix" class="form-label">Prefix:<span class="tt" data-bs-placement="top" title="Select Prefix from dropdown">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.prefix class="form-control" maxlength="100" type="dropdown" id="prefix" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Person Name:<span class="tt" data-bs-placement="top" title="Type Name first and Initial at end. Do not use prefix like - Mr, Dr, etc.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.altname class="form-control" type="text" id="exampleInputUsername" %} 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="nature" class="form-label">Bussiness Nature:<span class="tt" data-bs-placement="top" title="Select your Business Nature">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.nature class="form-control" maxlength="100" type="dropdown" id="nature" %} 
+                                      </div>
+                                      </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Firm type:<span class="tt" data-bs-placement="top" title="Select your Business Type">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </span></label>
+                                        {% render_field form.firm_type class="form-control" maxlength="100" type="dropdown" id="type" %}
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">GST no:<span class="tt" data-bs-placement="top" title="Enter you registered GST number">
+                                                <i class="fa-solid fa-circle-question"></i>
+                                            </span></label>
+                                            {% render_field form.gst_no class="form-control" maxlength="20" type="dropdown" id="gst"  %}
+                             </div>
+                             </div>
+                             <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="pincode" class="form-label">Description :<span class="tt" data-bs-placement="top" title="Breif description of the firm, products, Awards, Certifications, Speciality, etc.,">
+                                        <i class="fa-solid fa-circle-question"></i>
+                                    </span></label>
+                                    {% render_field form.description class="form-control" pattern=".{6}" required="required" %}
+                                </div>
+                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Logo</label>
+                                            {% render_field form.logo class="form-control" type="file" id="exampleInputUsername" %}
+                                        </div>
+                                        
+                            </div>
+                        </div>                                          
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group text-center">
+                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+<!--            </form>-->
+            </div>
+        </div>
+    </section>
+</form>
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'assets/js/select2/dist/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'assets/js/validate/jquery.validate.min.js' %}"></script>
+<script src="{% static 'assets/js/select2/dist/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'assets/js/validate/jquery.validate.min.js' %}"></script>
+<!--<script src="{% static 'assets/js/ecom.js' %}"></script>-->
+<!--<script src="{% static 'assets/js/taskform.min.js' %}"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script>
+    const tooltips = document.querySelectorAll('.tt')
+    tooltips.forEach(t => {
+      new bootstrap.Tooltip(t)
+    })
+  </script>
+    <script>
+        $(document).ready(function () {
+                $('#id_state, #id_city, #prefix, #nature, #designation, #type,#type1, #type2, #type3').select2({
+                    theme: "bootstrap4",
+                    placeholder: 'Select ',
+                });
+            });
+    </script>
+<script>
+    $("#id_state").change(function () {
+           const url = $("#BasicForm").attr("data-cities-url");  // get the url of the `load_cities` view
+           const countryId = $(this).val();  // get the selected country ID from the HTML input
+
+           $.ajax({                       // initialize an AJAX request
+               url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+               data: {
+                   'region_id': countryId       // add the country id to the GET parameters
+               },
+               success: function (data) {   // `data` is the return of the `load_cities` view function
+                   $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
+               }
+           });
+       });
+    
+    $("#ph").keyup(function () {
+        const url = $("#BasicForm").attr("data-check-mobile-url");
+        const data = $("#ph").val();
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'mobile': data       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $('#mobile_err').html(data);  // replace the contents of the city input with the data that came from the server
+            }
+        });
+
+    });
+</script>
+       
+{% endblock%}

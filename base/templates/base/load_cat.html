@@ -1,0 +1,5 @@
+<select class="form-control" multiple="multiple">
+   {% for sub in sub %}
+<option value="{{ sub.pk }}">{{ sub.sub_category }}</option>
+{% endfor %}
+</select>

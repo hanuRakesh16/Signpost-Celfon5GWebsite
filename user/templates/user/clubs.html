@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+        <!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>Clubs</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Clubs</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb End -->
+        <!-- Our Project Start -->
+    <section class="portfolio-section portfolio-padding grid-portfolio ratio2_3">
+        <div class="container">
+            <form class="mb-2" method="POST">
+                <input type="search" class="form-control" placeholder="Search Clubs" id="clubfilter" />
+            </form>
+            <div class="row  zoom-gallery clubs">
+                <h3 class="error" id="empty"></h3>
+                {% for clubs in clubs %}
+                <div id="clubs" class="isotopeSelector filter fashion col-lg-3 col-sm-6">
+                    <div class="overlay">
+                        <div class="border-portfolio">
+                            <a href="{% url 'clubs_view' clubs.slug %}">
+                                <div class="overlay-background">
+                                    <i>{{ clubs.name }}</i>
+                                </div>
+                                {% if clubs.image %}
+                                    <img src="{{ clubs.image.url }}"
+                                    class="img-fluid blur-up lazyload bg-img">
+                                {% else %}
+                                    <img src="{% static 'webimages/na.jpg' %}"
+                                         class="img-fluid blur-up lazyload bg-img"
+                                         alt="Image">
+                                {% endif %}
+                            </a>
+                        <h3 class="text-center text-bold club-name">{{ clubs.name }}</h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Our Project End -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+    $(document).ready(function(){
+        $("#clubfilter").keyup(function(){
+          var filter = $(this).val();
+          $("#clubs").each(function(){
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    });
+});    
+</script>
+{% endblock %}

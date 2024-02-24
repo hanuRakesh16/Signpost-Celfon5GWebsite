@@ -1,0 +1,148 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>Clubs</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home{{ request.path }}</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb End -->
+{% if clubmembers %}
+    <!-- about section start -->
+    <section class="about-page section-b-space">
+        <div class="container">
+            <div class="col-sm-12">
+                <h2 class="text-center">{{ clubs.name }}</h2>
+            </div>
+            <div class="row">
+                {% if clubs.image %}
+                <div class="col-lg-12">
+                    <div class="banner-section"><img src="{{clubs.image.url}}"
+                            class="img-fluid blur-up lazyload" alt=""></div>
+                </div>
+                {% endif %}
+                <div class="col-sm-12">
+                    <h4>DESCRIPTION</h4>
+                    <p>{{ clubs.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- about section end -->
+    
+        {#    custom  #}
+        <section class="section-b-space ratio_asos section1">
+                <div class="collection-wrapper">
+                    <div class="container">
+                    <h3>MEMBERS</h3>
+                    {% for object in clubmembers %}
+                        <div class="product-wrapper-grid list-view">
+                            <div class="">
+                                <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                {% if object.logo %}
+                                                    <img src="{{ object.logo.url }}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% else %}
+                                                    <img src="{% static 'webimages/na.jpg' %}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div>
+                                                
+                                                <a {% if object.detailType == 'F' %} href="
+                                                        {{ object.get_absolute_url }}"
+                                                        {% else %}
+                                                        href="{{ object.get_person_url }}"
+                                                        {%endif %} 
+                                                        class="font-weight-bold h3 ">
+                                                    <b>{{ object.name }}</b>
+                                                </a>
+                                                <div class="address h6"><i class="fa-solid fa-briefcase"></i>&nbsp;
+                                                    <span class="h6">{{ object.altname|default:"Not Available" }}</span>
+                                                </div>
+                                                <div class="address h6"><i class="fa-solid fa-location-dot"></i>&nbsp;
+                                                    <span class="h6">&nbsp;{{ object.door_no }},&nbsp; {{ object.street_name }},&nbsp;{{ object.area }},{{ object.city }},&nbsp;{{ object.pincode }}</span>
+                                                </div>
+                                                <div class="phone h6"><i class="fa fa-solid fa-phone"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="tel:{{ object.mobile_number }}">{{ object.mobile_number }}</a></span>
+                                                </div>
+                                                <div class="phone h6"><i class="fa fa-solid fa-envelope"></i>&nbsp;
+                                                    <span class="h6">{{ object.email|default:"Not Available" }}</a></span>
+                                                </div>
+                                                {% comment %} <div class="phone h6"><i class="fa-solid fa-droplet"></i>&nbsp;
+                                                    <span class="h6">{{ object.blood_group|default:"Not Available" }}</a></span>
+                                                </div> {% endcomment %}
+                                                {% comment %} <div class="phone h5"><i class="fa-solid fa-cake-candles"></i>&nbsp;
+                                                    <span class="h6">{{ object.year_of_birth|default:"Not Available" }}</a></span>
+                                                </div> {% endcomment %}
+                                                {% if request.user.is_authenticated %}
+                                                {% if object.pk in wishlist %}
+                                                <button class="btn button1 btn-solid" >
+                                                    <a href="{% url 'user_wishlist' object.slug %}">
+                                                      <span id="wishlistText" class="button1 span1" style="color: white;">Remove from Prospects list</span>
+                                                    </a>
+                                                  </button>
+                                                  {% else %}
+                                                  <button class="btn button1 btn-solid" >
+                                                    <a href="{% url 'user_wishlist' object.slug %}">
+                                                      <span id="wishlistText" class="button1 span1" style="color: white;">Add to Prospects list</span>
+                                                    </a>
+                                                  </button>
+                                                  {% endif %}
+                                            {% else %}
+                                                <button class="btn button1 btn-solid" >
+                                                    <a href="{% url 'user-login' %}">
+                                                      <span id="wishlistText" class="button1 span1" style="color: white;">Add to Prospects list</span>
+                                                    </a>
+                                                  </button>
+                                            {% endif %}
+                                                <div><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {#    custom  #}
+    {% else %}
+        <div class="collection-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-md-12 alert alert-dark">
+                            <h3 class="d-flex justify-content-center text-dark">No Members found! &nbsp;&nbsp;</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+{% endblock %}

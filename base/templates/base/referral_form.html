@@ -1,0 +1,476 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load widget_tweaks %}
+{% block content %}
+    <style>
+    .hidden, .nonfield{
+        display: none;
+    }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .select2{
+            width: 100% !important;
+        }
+        .wrapper {
+            width: 100%;
+            background: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .05);
+            overflow: hidden;
+        }
+
+        h1.title {
+            padding: 15px 0;
+            margin-left: 25px;
+            font-weight: normal;
+            color: rgba(57, 50, 173, 1)
+        }
+
+        .form {
+            width: 100%;
+        }
+
+        .myform {
+            background: #F4F5F7;
+            width: 100%;
+            padding: 25px;
+        }
+
+        .myform label {
+            display: block;
+            color: #3F3F3F;
+            font-weight: bold;
+            font-size: .8rem;
+            margin-bottom: 10px;
+        }
+
+        .myform input[type="text"], input[type="file"],
+        input[type="number"], input[type="email"], select[type="text"] {
+            border: 0;
+            outline: 0;
+            height: 50px;
+            background: #FFF;
+            width: 100%;
+            border-radius: 5px;
+            color: #155BDA;
+            font-weight: 700;
+            font-size: .9rem;
+            text-indent: 15px;
+            border: 2px solid transparent;
+            transition: border 250ms;
+        }
+
+        .full-width {
+            grid-column: -1 / 1
+        }
+
+        .button {
+            grid-column: -1 / 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button button {
+            border: 0;
+            outline: 0;
+            width: 120px;
+            height: 50px;
+            border-radius: 50px;
+            color: #FFF;
+            font-weight: bold;
+            font-size: .9rem;
+            cursor: pointer;
+            background: linear-gradient(356deg, rgba(57, 50, 173, 1) 0%, rgba(87, 50, 173, 1) 100%);
+        }
+
+        .button button:hover {
+            background: rgba(57, 50, 173, 1);
+        }
+        @media only screen and (min-width: 768px) {
+            .product {
+                width: 100%;
+            }
+        }
+        @media only screen and (min-width: 400px) {
+        .product {
+            width: 100%;
+        }
+        }
+        @media (prefers-reduced-motion: reduce){
+.product {
+    transition: none;
+}}
+
+    </style>
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-2">
+                <h3><a href="{% url 'tasks' %}" class="btn btn-danger">Go Back</a></h3>
+            </div>
+        </div>
+    </div>
+    <div class=" container wrapper">
+        <div class="form">
+            <h1 class="title text-center">Add Firm</h1>
+            {% for message in messages %}
+                <div class="alert alert-danger" id="message">
+                    <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <hr>
+            <div class="form-group myform">
+                <form method="post" id="addform" enctype="multipart/form-data"
+                      data-cities-url="{% url 'ajax_load_cities' %}" data-cat-url="{% url 'ajax_load_cat' %}"
+                      data-p-url="{% url 'ajax_load_p' %}">
+                    {% csrf_token %}
+                    {#        {{ form|crispy}}#}
+                    <div class="row">
+                        <h3 class="title">Business Details</h3>
+                        <hr>
+                        <div class="col-lg-12">
+                            <label>{{ form.name.label }}*<span class="tt" data-bs-placement="top" title="Spell/Type as in Visiting Card. Use abbrevations located alphabetically as typed.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.name class="form-control" data-rule-minlength="2" data-rule-maxlength="45" data-msg-minlength="At least two chars" data-msg-maxlength="max 45 chars" maxlength="45" type="text" id="bname" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>{{ form.door_no.label }}*<span class="tt" data-bs-placement="top" title="Do not type - D.No.,#, Site.No. etc.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.door_no class="form-control" maxlength="100" type="text" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>{{ form.street_name.label }}*<span class="tt" data-bs-placement="top" title="Type only Road, Street names. Use abbrevations - Rd, St, Ngr, LO. etc.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.street_name class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Bldg, Floor<span class="tt" data-bs-placement="top" title="Type name of Apartment, Building, Floor, Flat number, etc. Use abbrevations - Apt, Bldg, Flr.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.building_name class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>Locality*<span class="tt" data-bs-placement="top" title="Local Area Name, Ward Name or Postal Area Name.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.area class="form-control" maxlength="100" type="text" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>{{ form.landmark.label }}<span class="tt" data-bs-placement="top" title="Type Near, Opposite, Front of, Next to, etc of well known place.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.landmark class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>{{ form.city.label }}*<span class="tt" data-bs-placement="top" title="Type correct city name as officialy known. Don't use short form. (Eg: Don't type CBE, kovai. Type as Coimbatore.)">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.city class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>{{ form.state.label }}*<span class="tt" data-bs-placement="top" title="Select State from the dropdown">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.state class="form-control" maxlength="100" type="dropdown" id="id_state" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>{{ form.district.label }}*<span class="tt" data-bs-placement="top" title="Select district from Dropdown">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.district class="form-control" type="dropdown" id="id_city" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>{{ form.pincode.label }}*<span class="tt" data-bs-placement="top" title="Type all 6 digits continuously. Do not leave any gap between digits.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.pincode class="form-control"  pattern=".{6}" required="required" title="6 characters minimum" type="number" id="pincode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="6" %}
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+
+                        <div class="col-lg-2">
+                            <label>{{ form.std_code.label }}<span class="tt" data-bs-placement="top" title="Mention only if Landline is typed next.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.std_code class="form-control office_phone" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" id="std" %}
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Landline No.<span class="tt" data-bs-placement="top" title="Type all digits without any gap in between for office Landline.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.landline class="form-control office_phone" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" id="office_mobile" %}
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>{{ form.email.label }}*<span class="tt" data-bs-placement="top" title="Enter an Valid Email Address ">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.email class="form-control" maxlength="100" type="email" id="exampleInputUsername" %}
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>{{ form.website.label }}<span class="tt" data-bs-placement="top" title="Enter Website with prefix 'www.'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.website class="form-control" type="text" id="exampleInputUsername" %}
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h3 class="title">Contact Person Details</h3>
+                        <hr>
+                        <div class="col-lg-2">
+                            <label>{{ form.prefix.label }}*<span class="tt" data-bs-placement="top" title="Select Prefix from dropdown">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.prefix class="form-control" maxlength="100" type="dropdown" id="prefix" %}
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Contact Person*<span class="tt" data-bs-placement="top" title="Type Name first and Initial at end. Do not use prefix like - Mr, Dr, etc.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.altname class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-6">
+                            <label>{{ form.mobile_number.label }}*<span class="tt" data-bs-placement="top" title="Type 10 digits continuously. No gap between digits. No country code. No +91 prefix etc.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.mobile_number class="form-control phone" pattern="(0|91)?[6-9][0-9]{9}" required="required" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max_length="10" type="number" id="ph" %}
+{#                            <input type="text" id="country" name="country" value={{ mobile }} readonly>#}
+                            <p class="err text-danger"></p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <h3 class="title">Business Activity</h3>
+                        <hr>
+                        <div class="col-lg-6">
+                            <label>Business Nature*<span class="tt" data-bs-placement="top" title="Select your Business Nature">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.nature class="form-control" maxlength="100" type="dropdown" id="nature" %}
+                        </div>
+{#                        <div class="col-lg-6">#}
+{#                            <label>{{ form.firm_type.label }}*<span class="tt" data-bs-placement="top" title="Select your Firm Type">#}
+{#                                <i class="fa-solid fa-circle-question"></i>#}
+{#                            </span></label>#}
+{#                            {% render_field form.firm_type class="form-control" maxlength="100" type="dropdown" id="exampleInputUsername" %}#}
+{#                        </div>#}
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>{{ form.description.label }}<span class="tt" data-bs-placement="top" title="Breif description of the firm, products, Awards, Certifications, Speciality, etc.,">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.description class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="details_div">
+                        <h3 class="title"> Products</h3>
+                        <br>
+                        <div class="row details_div_row first_details">
+                            <div class="col-lg-3 " >
+                                <label>Product 1*<span class="tt" data-bs-placement="top" title="Type in 2 or 3 words, the specific product or service name or select from drop-down. Prefer Product List if available.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.mproducts1 class="form-control product" name="mp1" type="text" id="id_products" %}
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Sub Category<span class="tt" data-bs-placement="top" title="Based on value typed for PRODUCT, this field is automatically filled. If not filled automatically, please select 'OTHERS'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.msub_category1 class="form-control" name="msc1" type="text" id="id_sub_category" %}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Category<span class="tt" data-bs-placement="top" title="Based on value typed for PRODUCT, this field is automatically filled. If not filled automatically, please select 'OTHERS'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.mcategory1 class="form-control" name="mc1" type="text" id="id_category" %}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Product Type</label>
+                                {% render_field form.mtype1 class="form-control" name="mtype1" type="text" id="type1" %}
+{#                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>#}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row details_div_row first_details " id="add1" style="display: none;">
+                            <div class="col-lg-3 " style="width: 100%">
+                                <label>Product 2<span class="tt" data-bs-placement="top" title="Type in 2 or 3 words, the specific product or service name or select from drop-down. Prefer Product List if available.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.mproducts2 class="form-control product" name="mp2" type="text" id="id_products1" %}
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Sub Category<span class="tt" data-bs-placement="top" title="Based on value typed for PRODUCT, this field is automatically filled. If not filled automatically, please select 'OTHERS'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.msub_category2 class="form-control" name="msc2" type="text" id="id_sub_category1" %}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Category<span class="tt" data-bs-placement="top" title="Based on value typed for PRODUCT, this field is automatically filled. If not filled automatically, please select 'OTHERS'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.mcategory2 class="form-control" name="mc2" type="text" id="id_category1" %}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Product Type</label>
+                                {% render_field form.mtype2 class="form-control" name="mtype1" type="text" id="type2" %}
+{#                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>#}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row details_div_row first_details " id="add2" style="display: none">
+                            <div class="col-lg-3 " style="width: 100%">
+                                <label>Product 3<span class="tt" data-bs-placement="top" title="Type in 2 or 3 words, the specific product or service name or select from drop-down. Prefer Product List if available.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.mproducts3 class="form-control product" name="mp3" type="text" id="id_products2" %}
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Sub Category<span class="tt" data-bs-placement="top" title="Based on value typed for PRODUCT, this field is automatically filled. If not filled automatically, please select 'OTHERS'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.msub_category3 class="form-control" name="msc3" type="text" id="id_sub_category2" %}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Category<span class="tt" data-bs-placement="top" title="Based on value typed for PRODUCT, this field is automatically filled. If not filled automatically, please select 'OTHERS'">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                                {% render_field form.mcategory3 class="form-control" name="mc3" type="text" id="id_category2" %}
+                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Product Type</label>
+                                {% render_field form.mtype3 class="form-control" name="mtype1" type="text" id="type3" %}
+{#                                <small id="Help" class="form-text text-muted">Select "Others" if not Automatically filled.</small>#}
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success" id="p1" onclick="toggleText()" style="display: flex">
+                        Add Product</button>
+                    <button type="button" class="btn btn-success" id="p2" onclick="toggleButton()" style="display: none">
+                        Add Product</button>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>{{ form.visiting_card.label }}</label>
+                            {% render_field form.visiting_card class="form-control" maxlength="100" type="file" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-3">
+                            <label>{{ form.logo.label }}*<span class="tt" data-bs-placement="top" title="Upload Business Logo or Shop Front Image with Banner.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.logo class="form-control" type="file" id="exampleInputUsername" %}
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>{{ form.catalogue.label }}<span class="tt" data-bs-placement="top" title="Upload Image or PDF of Catalogue.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.catalogue class="form-control" type="file" id="exampleInputUsername" %}
+                        </div>
+                        <div class="col-lg-3">
+                            <label>{{ form.video.label }}<span class="tt" data-bs-placement="top" title="Paste Your Youtube Video Link.">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span></label>
+                            {% render_field form.video class="form-control" type="text" id="exampleInputUsername" %}
+                        </div>
+                    </div>
+                    <br>
+                     {% if formset %}
+                 <h3> Ecom Products</h3>
+
+            {{ formset.management_form }}
+                <div id="product-form-list">
+                {% for form in formset %}
+                <div class="product_form form-group p-2">
+                {{ form.as_crispy_field }}
+                </div>
+                {% endfor %}
+                </div>
+
+
+            {% endif %}
+            <div id="empty_form" class="hidden">{{ formset.empty_form }}</div>
+            <button type="button" id="add-more" class="btn btn-success mt-3">Add Product</button><br><br>
+                <p class="h5 ">Are you willing to insert advertisement in the directory?</p>
+                <div class="form-check">
+  <input class="form-check-input h5" type="radio" name="exampleRadios" id="exampleRadios1" checked>
+    <p class="fw-bold">Yes, Contact me.</p>
+                    <input class="form-check-input h5" type="radio" name="exampleRadios" id="exampleRadios1">
+    <p class="fw-bold">I will call you later.</p>
+</div>
+                    <div class="mt-5 mb-3 d-flex justify-content-center"><input type="submit"
+                                                                                class="button btn btn-dark btn-success p-2 px-auto col-md-6 col-6"
+                                                                                value="SUBMIT"/></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'assets/js/select2/dist/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'assets/js/validate/jquery.validate.min.js' %}"></script>
+     <script src="{% static 'assets/js/ecom.js' %}"></script>
+    <script src="{% static 'assets/js/taskform.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <script>
+    let message_ele = document.getElementById("message");
+
+setTimeout(function(){
+   message_ele.style.display = "none";
+}, 5000);
+    </script>
+    <script>
+        const tooltips = document.querySelectorAll('.tt')
+        tooltips.forEach(t => {
+          new bootstrap.Tooltip(t)
+        })
+      </script>
+      <script>
+        $(document).ready(function () {
+                $('#id_state, #id_city, #prefix, #nature, #designation, #type1, #type2, #type3').select2({
+                    theme: "bootstrap4",
+                    placeholder: 'Select ',
+                });
+            });
+    </script>
+{% endblock %}

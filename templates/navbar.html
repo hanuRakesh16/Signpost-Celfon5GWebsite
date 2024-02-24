@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'tasks' %}">MEDIA PARTNER</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      {% if request.user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if nbar == 'add_firm_tm' %}active{% endif %}" href="{% url 'basic' %}">Add Firm(TM)</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link {% if nbar == 'add_firm_dm' %}active{% endif %}" href="{% url 'task-create' %}">Add Firms(DM)</a>
+        </li>
+           <li class="nav-item">
+          <a class="nav-link {% if nbar == 'add_person' %}active{% endif %}" href="{% url 'individual' %}">Add Persons</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if nbar == 'firm_list' %}active{% endif %}" aria-current="page" href="{% url 'tasks' %}">Firm List</a>
+        </li>
+        
+{#           <li class="nav-item">#}
+{#          <a class="nav-link" aria-current="page" href="{% url 'business-activity' %}">Business Activity</a>#}
+{#        </li>#}
+<li class="nav-item">
+          <a class="nav-link {% if nbar == 'referrals' %}active{% endif %}" href="{% url 'myreferrals' %}">My Referrals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if nbar == 'adv' %}active{% endif %}" href="{% url 'list-ad' %}">Create Advt.</a>
+        </li>
+        
+          
+          
+          <li class="nav-item">
+          <a class="nav-link {% if nbar == 'order_booking' %}active{% endif %}" href="{% url 'order-confirm' %}">Order Booking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if nbar == 'earnings' %}active{% endif %}" href="{% url 'work' %}">Earnings</a>
+        </li>
+          <li class="nav-item">
+          <a target="_blank" class="nav-link" href="{% url 'index' %}">Go to Home Page</a>
+        </li>
+      </ul>
+        <span class="navbar-text m-3" >
+            <h5 class="mb-0">Hello, {{ request.user }} </h5>
+      </span>
+      <span class="navbar-text">
+          <a href="{% url 'logout' %}" class="btn btn-outline-success">LOGOUT</a>
+      </span>
+    </div>
+      {% endif %}
+  </div>
+</nav>
+<script>
+// Get the container element
+var btnContainer = document.getElementById("navbarText");
+
+// Get all buttons with class="btn" inside the container
+var btns = btnContainer.getElementsByClassName("nav-link");
+
+// Loop through the buttons and add the active class to the current/clicked button
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+</script>

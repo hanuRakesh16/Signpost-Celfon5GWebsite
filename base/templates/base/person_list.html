@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid"style="padding: 0">
+    <div class="" style="padding: 0">
+        <div class="col-md-offset-1 col-md-12">
+            <div class="panel" style="padding: 5px">
+                <div class="panel-heading" style="padding: 20px 15px;
+    border-radius: 10px 10px 0 0;
+    margin: 0;">
+                    <div class="row">
+                        <h1 class="text-center text-dark">My Persons Listing</h1>
+                    </div>
+                </div>
+                <div class="panel-body table-responsive text-dark">
+                    <table class="table text-dark">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>City</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for person in persons|slice:"50" %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ person.name }}</td>
+                                <td>{{ person.city }}</td>
+                                <td>
+                                    <ul class="action-list" style="list-style: none;">
+                                        <li><a href="{% url 'pdetail' person.slug %}" data-tip="view"><i class="fa fa-solid fa-eye"></i></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% empty %}
+                        <h3>No Items in List</h3>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

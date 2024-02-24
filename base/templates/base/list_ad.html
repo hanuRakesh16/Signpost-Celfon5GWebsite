@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid"style="padding: 0">
+    <div class="" style="padding: 0">
+        <div class="col-md-offset-1 col-md-12">
+            <div class="panel" style="padding: 5px">
+                <div class="panel-heading" style="padding: 20px 15px;
+    border-radius: 10px 10px 0 0;
+    margin: 0;">
+                    <div class="row">
+                        <div class="col-11 d-flex justify-content-center">
+                            <h1 class="text-center text-dark">My Business Listing (Draft)</h1>
+                        </div>
+                         <div class="col-1 d-flex justify-content-end">
+                            <button class="btn btn-primary "><a href="{%url 'create-ad'%}" style="text-decoration: none; color: #ffffff">Create New</a></button>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="panel-body table-responsive text-dark">
+                    <table class="table text-dark">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Business name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for ad in ads %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ ad.business_name }}</td>
+                                <td><a href="{% url 'update-ad' ad.slug %}" data-tip="view">Update</a></td>
+                            </tr>
+                        {% empty %}
+                        <h3>No Items in List</h3>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

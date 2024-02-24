@@ -1,0 +1,3 @@
+{% for firm in firms %}{{ firm.name }}{{ firm.email }}{{ firm.mobile_number}}{{ firm.door_no }}{{ firm.street_name }}{{ firm.area }}{{ firm.city }}{{ firm.pincode }}
+
+{{firm.description}},{{ firm.mcategory1}}, {{firm.mcategory2}},{{ firm.mcategory3}}, {{firm.mproducts1}}, {{firm.mproducts2}}, {{firm.mproducts3}}, {{firm.msub_category1}}, {{firm.msub_category2}},{{ firm.msub_category3}};{% endfor %}

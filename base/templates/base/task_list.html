@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid"style="padding: 0">
+    <div class="" style="padding: 0">
+        <div class="col-md-offset-1 col-md-12">
+            <div class="panel" style="padding: 5px">
+                <div class="panel-heading" style="padding: 20px 15px;
+    border-radius: 10px 10px 0 0;
+    margin: 0;">
+                    <div class="row">
+                        <h1 class="text-center text-dark">My Listing</h1>
+                    </div>
+                </div>
+                <div class="panel-body table-responsive text-dark">
+                    <table class="table text-dark">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Business name</th>
+                                <th>Type</th>
+                                <th>City</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in tasks %}
+                        {% if task.user == request.user %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ task.name }}</td>
+                                <td>{{ task.detailType }}</td>
+                                <td>{{ task.city }}</td>
+                                <td>
+                                    <ul class="action-list" style="list-style: none;">
+                                        <li><a href="{% url 'task' task.slug %}" data-tip="view"><i class="fa fa-solid fa-eye"></i></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% empty %}
+                        <h3>No Items in List</h3>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

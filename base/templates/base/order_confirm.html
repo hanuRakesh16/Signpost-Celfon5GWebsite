@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              {% comment %} {{ form|crispy }} {% endcomment %}
+                <div class="row">
+                  <h1 class="text-center mb-2">Order Booking Form<button type="button" class="btn btn-secondary ml-2" data-bs-toggle="modal" data-bs-target="#usr-modal">
+    User Guide
+  </button></h1><hr>
+  <!-- modal itself -->
+  <div class="modal fade" id="usr-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Business Listing User Guide</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p class="lead">&nbsp;This Form is used to book the order for the Predesigned and aooroved matter and also collect payment through UPI, GPay.<br>Following steps involved, when the content is finalised.</p>
+{#          <img class="img-responsive imd-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1024px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="qr-code" width="200">#}
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;First enter all details of the firm through MP -> Add Firms.</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Next Create Ad of the firm at MP -> Create Ad.<br>Get it approved and download the final design. Remember to notedown the location.</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;You can also, show the spewcimen Ads from the Tariff card and select the SPACE CODE.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                    <label for="title">Firm name</label>
+                    {% render_field form.firm_name class="form-control product" name="firm_name" type="text" id="id_firm_name" required="required" %}
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                    <label for="title">Business Listing Image:</label>
+                    {% render_field form.image class="form-control product" name="image" type="file" id="id_image" required="required" %}
+                </div>
+                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                    <label for="title">Space Code:</label>
+                    {% render_field form.space_code class="form-control product" name="space_code" type="text" id="id_code"%}
+                </div> 
+                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                    <label for="title">Space Value</label>
+                    {% render_field form.space_value class="form-control product" name="space_value" type="text" id="id_value"%}
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                    <label for="title">Payment Mode</label>
+                    {% render_field form.payment_mode class="form-control product" name="payment_mode" type="text" id="id_payment_mode" %}
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                    <label for="title">Total Amount</label>
+                    {% render_field form.amount class="form-control product" name="amount" type="number" id="id_amount" required="required" %}
+                </div>
+                </div>
+  <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#reg-modal">
+    GPay
+  </button><span class="tt" data-bs-placement="top" title="Tap to pay by UPI, GPay, PhonePe, etc.">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span><br><br>
+                <button type="submit" class="btn btn-default btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+  <!-- modal itself -->
+  <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Signpost Celfon 5g</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive imd-fluid" src="{% static 'webimages/Signpost QR.jpeg' %}" alt="qr-code" width= "100%">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'assets/js/select2/dist/js/select2.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+            $('#id_firm_name').select2({
+                theme: "bootstrap4",
+                placeholder: 'Select firm',
+            });
+        });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script>
+        const tooltips = document.querySelectorAll('.tt')
+        tooltips.forEach(t => {
+          new bootstrap.Tooltip(t)
+        })
+      </script>
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends "main.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% load crispy_forms_filters %}
+
+{% comment %} {% block head_title %}{% trans "Sign In" %}{% endblock %} {% endcomment %}
+
+{% block content %}
+<!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>customer's login</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item active">login</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb End -->
+  <div class="text-center">
+    {% comment %} <h1>{% trans "Sign In" %}</h1> {% endcomment %}
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+    {% comment %} <p>{% blocktrans with site.name as site_name %}Please sign in with one
+    of your existing third party accounts.<br>Or, <a href="{{ signup_url }}">sign up</a>
+    for a {{ site_name }} account and sign in below:{% endblocktrans %}</p> {% endcomment %}
+
+    <div class="socialaccount_ballot">
+
+      <div class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </div>
+
+      <div class="login-or border-top border-bottom my-3">{% trans 'OR' %}</div>
+
+    </div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+    <p><br/>
+        {% comment %} {% blocktrans %} {% endcomment %}
+        If you have not created an account yet, then please
+    <a href="{% url 'register' %}">sign up</a> first.
+        {% comment %} {% endblocktrans %} {% endcomment %}
+    </p>
+    {% endif %}
+  </div>
+   <!--section start-->
+    <section class="login-page section-b-space">
+        <div class="container">
+            {% if messages %}
+            <div class="alert alert-{{ messages.tags }}" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Login</h3>
+                    <div class="theme-card">
+                        <form class="theme-form" method="POST" action="{% url 'user-login' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="email">Mobile Number</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Mobile Number" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Enter your password" data-toggle="password" required="required">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="checkbox" onclick="passwordToggle()" id="ShowPasswordToggle" class="justify-content-start">
+                                            <label for="ShowPasswordToggle">Show Password</label>
+                                        </div>
+                                        <div class="col-6 justify-content-end">
+                                            <a href="{% url 'forgot_pwd' %}" class="justify-content-end">forgot password?</a>
+                                        </div>
+                                    </div>
+                            </div><input type="submit" class="btn btn-solid" value="Login" />
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 right-login">
+                    <h3>New Customer</h3>
+                    <div class="theme-card authentication-right">
+                        <h6 class="title-font">Create A Account</h6>
+                        <p>Sign up for a free account. Registration is quick and easy. </p><a href="{% url 'register' %}"
+                            class="btn btn-solid">Create an Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section ends-->
+  {% comment %} <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <div class="d-grid">
+            <button class="primaryAction mt-3 btn btn-dark" type="submit">{% trans "Sign In" %}</button><br>
+            <a class="button secondaryAction text-dark text-center" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+          </div>
+        </form>
+    </div>
+  </div> {% endcomment %}
+<script>
+    let passwordCheckbox = document.getElementById('ShowPasswordToggle');
+    let passwordfield = document.getElementById('password');
+    function passwordToggle(){
+        if(passwordfield.type === "password"){
+            passwordfield.type = 'text';
+        } else {
+             passwordfield.type = 'password';
+        }
+    }
+</script>
+{% endblock %}

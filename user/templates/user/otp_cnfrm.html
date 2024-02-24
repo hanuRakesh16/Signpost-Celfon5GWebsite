@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--section start-->
+    <section class="pwd-page section-b-space">
+        <div class="container">
+            {% if messages %}
+            <div class="alert alert-{{ messages.tags }}" role="alert">
+            {% for message in messages %}
+                <p class="lead text-danger text-bold">{{ message }}</p>
+            {% endfor %}
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-6 m-auto">
+                    <h3>Enter the OTP sent to your Mobile</h3>
+                    <form class="theme-form" method="post" action="{% url 'cnfrm_otp' %}">
+                        {% csrf_token %}
+                        <div class="form-row row">
+                            <div class="col-md-12">
+                                <input type="text" name="otp" class="form-control" id="otp" placeholder="OTP"
+                                    required="">
+                            </div><button type="submit" class="btn btn-solid w-auto">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section ends-->
+{% endblock %}

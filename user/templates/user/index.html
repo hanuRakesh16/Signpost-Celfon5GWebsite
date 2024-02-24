@@ -1,0 +1,363 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% load static %}
+    <style>
+        .results-card {
+            width: 80%;
+            box-shadow: 02px 2px rgba(0, 0, 0, 0.25);
+            transition: 0.2s;
+            padding: 15px 15px;
+            background: #ffffff;
+        }
+
+        .img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .pink {
+            background-color : #ffc9ff; 
+        }
+        .btn-magenta {
+            background-color : #ff00ff;
+        }
+    </style>
+    <!-- Home slider -->
+
+    <section class="p-0 mb-5 position-relative" style="z-index: 1">
+        <div class="">
+            <div>
+                <div class="display-flex">
+                    <h2 class="justify-content-center text-center" style="text-decoration: none !important;"><span class="text-danger">P</span>ersonal <span class="text-danger">A</span>ssistant for <span class="text-danger">D</span>igital <span class="text-danger">MA</span>rketing</h2>
+                </div>
+                <div class="home section-b-space  text-center" style="height: 350px">
+                    <img src="{% static 'webimages/banner/bluebanner.jpg' %}" alt="" class="bg-img blur-up lazyload slider"
+                         height="350px">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mt-3">
+                                    <h2 class="text-dark">Search Your Prospect</h2><br>
+                                    <!--section start-->
+                                    <div class="container">
+                                        <section class="search-block mt-1">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-6 offset-lg-3">
+                                                        <form class="form-header" action="{% url 'search' %}"
+                                                              method="GET" id="search-form">
+                                                            <div class="input-group autocomplete" id="autocomplete">
+                                                                <input type="text" list="shop"
+                                                                       class="form-control autocomplete-input"
+                                                                       name="firms"
+                                                                       placeholder="Firms / Persons" id="firms" autocomplete="off"
+                                                                       style="padding-left: 40px !important;">
+                                                                <ul class="autocomplete-result-list d-flex justify-content-around flex-column"
+                                                                    style="overflow: auto"></ul>
+                                                                <div class="input-group-append">
+                                                                    <button type='submit' class="btn btn-secondary"><i
+                                                                            class="fa fa-search"></i>Search
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <br><br>
+                                                <div class="row">
+                                                    <div class="col-lg-6 offset-lg-3">
+                                                        <form class="form-header" action="{% url 'products' %}"
+                                                              method="GET" id="product-search">
+                                                            <div class="input-group autocomplete" id="autocomplete-p">
+                                                                <input type="text"
+                                                                       class="form-control autocomplete-input pink"
+                                                                       name="products"
+                                                                       aria-label="Amount (to the nearest dollar)"
+                                                                       placeholder="Products" autocomplete="off"
+                                                                       required style="padding-left: 40px !important;">
+                                                                <ul class="autocomplete-result-list d-flex justify-content-around flex-column bg-light"
+                                                                    style="height: 10rem;overflow:scroll"; ></ul>
+                                                                <div class="input-group-append">
+                                                                    <button type='submit' class="btn btn-magenta"><i
+                                                                            class="fa fa-search"></i>Search
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                {% comment %} <br><br>
+                                                <div class="row">
+                                                    <div class="col-lg-6 offset-lg-3">
+                                                        <form class="form-header" action="{% url 'person-search' %}"
+                                                              method="GET" id="individual-search">
+                                                            <div class="input-group">
+                                                                <input type="text"
+                                                                       class="form-control autocomplete-input"
+                                                                       name="persons"
+                                                                       aria-label="Amount (to the nearest dollar)"
+                                                                       placeholder="Persons" autocomplete="off"
+                                                                       required style="padding-left: 40px !important;">
+                                                                <div class="input-group-append">
+                                                                    <button type='submit' class="btn btn-solid"><i
+                                                                            class="fa fa-search"></i>Search
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div> {% endcomment %}
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <!-- section end -->
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Home slider end -->
+    <!-- category section -->
+    <section class="vector-category position-relative mt-1" style="z-index: 2">
+        <!-- <div class="container"> -->
+        <div class="vector-slide-8 category-slide margin-default ratio_square">
+            {% for cat in category %}
+                <div class="">
+                    <a href="{% url 'catsearch' cat.slug %}">
+                        <div class="img-category">
+                            <div class="img-sec">
+                                <img src="{% static 'webimages/na.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <h4>{{ cat.main_category }}</h4>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+        </div>
+    </section>
+    <!-- category section end -->
+
+
+    <!-- collection banner -->
+    <section class="pb-0 ratio2_1">
+        <div class="container">
+            <div class="row partition2 slide-2 no-arrow">
+                <div class="col-md-6 px-1">
+                    <a href="#">
+                        <div class="collection-banner p-right text-center">
+                            <div class="img-part">
+                                <img src="{% static 'webimages/homeslider/1.jpg' %}"
+                                     class="img-fluid blur-up lazyload bg-img"
+                                     alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 px-1">
+                    <a href="#">
+                        <div class="collection-banner p-right text-center">
+                            <div class="img-part">
+                                <img src="{% static 'webimages/homeslider/2.jpg' %}"
+                                     class="img-fluid blur-up lazyload bg-img"
+                                     alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 px-1">
+                    <a href="#">
+                        <div class="collection-banner p-right text-center">
+                            <div class="img-part">
+                                <img src="{% static 'webimages/homeslider/3.jpg' %}"
+                                     class="img-fluid blur-up lazyload bg-img"
+                                     alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 px-1">
+                    <a href="#">
+                        <div class="collection-banner p-right text-center">
+                            <div class="img-part">
+                                <img src="{% static 'webimages/homeslider/4.jpg' %}"
+                                     class="img-fluid blur-up lazyload bg-img"
+                                     alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 px-1">
+                    <a href="#">
+                        <div class="collection-banner p-right text-center">
+                            <div class="img-part">
+                                <img src="{% static 'webimages/homeslider/5.jpg' %}"
+                                     class="img-fluid blur-up lazyload bg-img"
+                                     alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 px-1">
+                    <a href="#">
+                        <div class="collection-banner p-right text-center">
+                            <div class="img-part">
+                                <img src="{% static 'webimages/homeslider/6.jpg' %}"
+                                     class="img-fluid blur-up lazyload bg-img"
+                                     alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- collection banner end -->
+
+
+    <!-- Paragraph-->
+    <div class="title1 section-t-space">
+        {#        <h4>special offer</h4>#}
+        <h2 class="title-inner1">Categories</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="product-para">
+{#                    <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolorem#}
+{#                        ex fugit illum nostrum quo? Blanditiis consectetur eius hic illum</p>#}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Paragraph end -->
+
+    <!-- category -->
+    <section class="pt-0 category-tools ratio3_2">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="slide-4 category-m no-arrow">
+                        {% for sub_category in sub_category %}
+                            <div>
+                                <div class="category-wrapper pt-0">
+
+                                    <div>
+                                        <div>
+                                            <img src="{% static 'webimages/na.jpg' %}"
+                                                 class="img-fluid blur-up lazyload bg-img" alt="">
+                                        </div>
+                                        <h4>{{ sub_category.0.category }}</h4>
+                                        <ul class="category-link">
+                                            {% for i in sub_category|slice:'5' %}
+                                                <li><a href="{% url 'subsearch' i.slug %}">{{ i }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        <a href="#" class="btn btn-classic btn-outline">view more</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- category end -->
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <script>
+        new Autocomplete('#autocomplete', {
+
+            search: input => {
+                const url = `ajax/search/?business_name=${(input)}`
+                return new Promise(resolve => {
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            resolve(data.data)
+                        })
+                })
+            },
+
+
+            renderResult: (result, props) => {
+                let group = ''
+                if (result.index % 3 === 0) {
+                    group = `<li class="group">Group</li>`
+                }
+                return `
+      ${group}
+      <li ${props}>
+        <div class="row d-flex justify-content-around">
+            <div class="col-2 justify-content-start align-items-center">
+               <img src="${result.image}" class="img">
+            </div>
+<div class="col-10 d-flex justify-content-center align-items-center">
+                                                        <h6 class="fw-bold ">${result.name}</h6>
+                                                    </div>
+        </div>
+      </li>
+    `
+            },
+
+            getResultValue: result => result.name,
+            onSubmit: result => {
+
+                window.open(`/firm/${(result.slug)}`)
+            }
+        })
+    </script>
+    <script>
+        new Autocomplete('#autocomplete-p', {
+
+            search: input => {
+                const url = `ajax/product/?product_name=${(input)}`
+                return new Promise(resolve => {
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            resolve(data.data)
+                        })
+                })
+            },
+
+
+            renderResult: (result, props) => {
+                let group = ''
+                if (result.index % 3 === 0) {
+                    group = `<li class="group">Group</li>`
+                }
+                return `
+      ${group}
+      <li ${props}>
+        <div class="row d-flex justify-content-around">
+<div class="col-10 d-flex justify-content-center align-items-center">
+                                                        <h6 class="fw-bold ">${result.name}</h6>
+                                                    </div>
+        </div>
+      </li>
+    `
+            },
+
+            getResultValue: result => result.name,
+        })
+    </script>
+    
+{% endblock %}
+
+
+

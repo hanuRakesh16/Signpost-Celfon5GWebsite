@@ -1,0 +1,633 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <form autocomplete="off">
+            <div class="form-group row">
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="title">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="address">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="email">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Promoter Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Name">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Promoter Designation</label>
+                    <input type="text" class="form-control" id="designation" placeholder="designation">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Number</label>
+                    <input type="number" class="form-control" id="number" placeholder="Number">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Products</label>
+                    <input type="text" class="form-control" id="products" placeholder="Products">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Landline</label>
+                    <input type="number" class="form-control" id="landline" placeholder="Landline">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputPassword1">Website</label>
+                    <input type="text" class="form-control" id="web" placeholder="website">
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Tiny - Rs:800/-</h4>
+        <hr>
+        <div id="tiny">
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <div class="text d-flex flex-row">
+                    <p class="fw-bold" id="t-title">title</p>
+                    <p class="fw-bold ml-3" id="t-number">9999999999</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <small>E:&nbsp;<span id="t-email">email</span></small>
+                    <small id="t-address" class="ml-3">address</small>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <small id="t-name" class="mr-1">name</small>
+                    <small id="t-designation">designation</small>
+                    <small id="t-products" class="ml-3">products</small>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="tinyBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Bold Listing - Rs:1200/-</h4>
+        <hr>
+        <div id="bold">
+            <div class="col-sm-6 col-lg-4 col-md-6">
+                <div class="text d-flex flex-row ">
+                    <h5 class="fw-bold" id="b-title">title</h5>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="b-address">address</p>
+                    <p id="b-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text ml-3">
+                    <p id="b-products">products</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="bBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Bold Listing - Rs:1800/-</h4>
+        <hr>
+        <div id="bl">
+            <div class="col-sm-6 col-lg-4 col-md-6">
+                <div class="text d-flex flex-row">
+                    <h5 class="fw-bold" id="bl-title">title</h5>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="bl-address">address</p>
+                    <p id="bl-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="bl-name">name</p>
+                    <p id="bl-designation" class="ml-1">designation</p>
+                    <p id="bl-number" class="ml-2">Number</p>
+
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>E:&nbsp;<span id="bl-email">email</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="bl-products">products</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="blBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Super Bold - Black - Rs:2200/-</h4>
+        <hr>
+        <div id="sb">
+            <div class="col-sm-6 col-lg-4 col-md-6">
+                <div class="text d-flex flex-row">
+                    <h4 class="fw-bold" id="sb-title">title</h4>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sb-address">address</p>
+                    <p id="sb-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sb-name">name</p>
+                    <p id="sb-designation" class="ml-1">designation</p>
+                    <p id="sb-number" class="ml-2">Number</p>
+
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>E:&nbsp;<span id="sb-email">email</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sb-products">products</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="sbBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Super Bold - Magenta - Rs:2800/-</h4>
+        <hr>
+        <div id="sbm">
+            <div class="col-sm-6 col-lg-4 col-md-6">
+                <div class="text d-flex flex-row">
+                    <h4 class="fw-bold" id="sbm-title" style="color: magenta;">title</h4>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbm-address">address</p>
+                    <p id="sbm-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbm-name">name</p>
+                    <p id="sbm-designation" class="ml-1">designation</p>
+                    <p id="sbm-number" class="ml-2">Number</p>
+
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>E:&nbsp;<span id="sbm-email">email</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbm-products">products</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="sbmBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Super Bold - Magenta - Rs:3400/-</h4>
+        <hr>
+        <div id="sbm1">
+            <div class="col-sm-6 col-lg-4 col-md-6">
+                <div class="text d-flex flex-row">
+                    <h4 class="fw-bold" id="sbm1-title" style="color: magenta;">title</h4>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbm1-address">address</p>
+                    <p id="sbm1-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbm1-name">name</p>
+                    <p id="sbm1-designation" class="ml-1">designation</p>
+                    <p id="sbm1-number" class="ml-2">Number</p>
+
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>E:&nbsp;<span id="sbm1-email">email</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>website:&nbsp;<span id="sbm1-web">website</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbm1-products">service</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="sbm1Btn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Super Bold - Magenta + Logo - Rs:4400/-</h4>
+        <hr>
+        <div id="sbml">
+            <div class="col-sm-6 col-lg-4 col-md-6">
+                <div class="text d-flex flex-row justify-content-center">
+                    <h3 class="border">LOGO</h3>
+{#                    <img src="{% static 'webimages/200x100.png' %}" height="100" width="200" alt="image"/>#}
+                </div>
+                <div class="text d-flex flex-row">
+                    <h4 class="fw-bold" id="sbml-title" style="color: magenta;">title</h4>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbml-address">address</p>
+                    <p id="sbml-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbml-name">name</p>
+                    <p id="sbml-designation" class="ml-1">designation</p>
+                    <p id="sbml-number" class="ml-2">Number</p>
+
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>E:&nbsp;<span id="sbml-email">email</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>website:&nbsp;<span id="sbml-web">website</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbml-products">products</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="sbmlBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Black Border - Rs:3400 + 600/-</h4>
+        <hr>
+        <div id="sbmb">
+        <div class="col-sm-6 col-lg-4 col-md-6" style="border: 4px solid black;">
+            <div class="text d-flex flex-row">
+                <h4 class="fw-bold" id="sbmb-title">title</h4>
+            </div>
+            <div class="text d-flex flex-row ml-3">
+                <p id="sbmb-address">address</p>
+                <p id="sbmb-landline" class="ml-2">Landline</p>
+            </div>
+            <div class="text d-flex flex-row ml-3">
+                <p id="sbmb-name">name</p>
+                <p id="sbmb-designation" class="ml-1">designation</p>
+                <p id="sbmb-number" class="ml-2">Number</p>
+            </div>
+            <div class="text d-flex flex-row ml-3">
+                <p>E:&nbsp;<span id="sbmb-email">email</span></p>
+            </div>
+            <div class="text d-flex flex-row ml-3">
+                <p>website:&nbsp;<span id="sbmb-web">website</span></p>
+            </div>
+            <div class="text d-flex flex-row ml-3">
+                <p id="sbmb-products">products</p>
+            </div>
+        </div>
+        </div><br>
+    <button id="sbmbBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+    <div class="container">
+        <h4 class="text-danger">Super Bold - Magenta + Logo + box - Rs:5400 + 1000/-</h4>
+        <hr>
+        <div id="sbmh" class>
+            <div class="col-sm-6 col-lg-4 col-md-6" style="border: 4px solid magenta; background-color: #fbcafc">
+                <div class="text d-flex flex-row justify-content-center mt-1">
+                    <h3 class="border">LOGO</h3>
+{#                    <img src="{% static 'webimages/200x100.png' %}" height="100" width="200" alt="image"/>#}
+                </div>
+                <div class="text d-flex flex-row">
+                    <h4 class="fw-bold" id="sbmh-title" style="color: magenta;">title</h4>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbmh-address">address</p>
+                    <p id="sbmh-landline" class="ml-2">Landline</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbmh-name">name</p>
+                    <p id="sbmh-designation" class="ml-1">designation</p>
+                    <p id="sbmh-number" class="ml-2">Number</p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>E:&nbsp;<span id="sbmh-email">email</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p>website:&nbsp;<span id="sbmh-web">website</span></p>
+                </div>
+                <div class="text d-flex flex-row ml-3">
+                    <p id="sbmh-products">service</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="sbmhBtn" class="btn btn-primary">Download</button>
+    </div>
+    <br>
+
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/html2canvas.min.js' %}"></script>
+    <script>
+        $("#tinyBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("tiny"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    {# Button #}
+    </script>
+    <script>
+        $("#bBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("bold"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#blBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("bl"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#sbBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("sb"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#sbmBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("sbm"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#sbm1Btn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("sbm1"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#sbmlBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("sbml"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#sbmbBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("sbmb"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        $("#sbmhBtn").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("sbmh"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                var anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+    </script>
+    <script>
+        let title = document.getElementById('title');
+        let ttitle = document.getElementById('t-title');
+        let btitle = document.getElementById('b-title');
+        let bltitle = document.getElementById('bl-title');
+        let sbtitle = document.getElementById('sb-title');
+        let sbmtitle = document.getElementById('sbm-title');
+        let sbm1title = document.getElementById('sbm1-title');
+        let sbmltitle = document.getElementById('sbml-title');
+        let sbmbtitle = document.getElementById('sbmb-title');
+        let sbmhtitle = document.getElementById('sbmh-title');
+        title.addEventListener('keyup', function () {
+            ttitle.innerHTML = title.value;
+            btitle.innerHTML = title.value;
+            bltitle.innerHTML = title.value;
+            sbtitle.innerHTML = title.value;
+            sbmtitle.innerHTML = title.value;
+            sbm1title.innerHTML = title.value;
+            sbmltitle.innerHTML = title.value;
+            sbmbtitle.innerHTML = title.value;
+            sbmhtitle.innerHTML = title.value;
+        });
+        let number = document.getElementById('number');
+        let tnumber = document.getElementById('t-number');
+        let blnumber = document.getElementById('bl-number');
+        let sbnumber = document.getElementById('sb-number');
+        let sbmnumber = document.getElementById('sbm-number');
+        let sbm1number = document.getElementById('sbm1-number');
+        let sbmlnumber = document.getElementById('sbml-number');
+        let sbmbnumber = document.getElementById('sbmb-number');
+        let sbmhnumber = document.getElementById('sbmh-number');
+        number.addEventListener('keyup', function () {
+            tnumber.innerHTML = number.value;
+            blnumber.innerHTML = number.value;
+            sbnumber.innerHTML = number.value;
+            sbmnumber.innerHTML = number.value;
+            sbm1number.innerHTML = number.value;
+            sbmlnumber.innerHTML = number.value;
+            sbmbnumber.innerHTML = number.value;
+            sbmhnumber.innerHTML = number.value;
+        });
+        let address = document.getElementById('address');
+        let taddress = document.getElementById('t-address');
+        let baddress = document.getElementById('b-address');
+        let bladdress = document.getElementById('bl-address');
+        let sbaddress = document.getElementById('sb-address');
+        let sbmaddress = document.getElementById('sbm-address');
+        let sbm1address = document.getElementById('sbm1-address');
+        let sbmladdress = document.getElementById('sbml-address');
+        let sbmbaddress = document.getElementById('sbmb-address');
+        let sbmhaddress = document.getElementById('sbmh-address');
+        address.addEventListener('keyup', function () {
+            taddress.innerHTML = address.value;
+            baddress.innerHTML = address.value;
+            bladdress.innerHTML = address.value;
+            sbaddress.innerHTML = address.value;
+            sbmaddress.innerHTML = address.value;
+            sbm1address.innerHTML = address.value;
+            sbmladdress.innerHTML = address.value;
+            sbmbaddress.innerHTML = address.value;
+            sbmhaddress.innerHTML = address.value;
+        });
+        let name = document.getElementById('name');
+        let tname = document.getElementById('t-name');
+        let blname = document.getElementById('bl-name');
+        let sbname = document.getElementById('sb-name');
+        let sbmname = document.getElementById('sbm-name');
+        let sbm1name = document.getElementById('sbm1-name');
+        let sbmlname = document.getElementById('sbml-name');
+        let sbmbname = document.getElementById('sbmb-name');
+        let sbmhname = document.getElementById('sbmh-name');
+        name.addEventListener('keyup', function () {
+            tname.innerHTML = name.value;
+            blname.innerHTML = name.value;
+            sbname.innerHTML = name.value;
+            sbmname.innerHTML = name.value;
+            sbm1name.innerHTML = name.value;
+            sbmlname.innerHTML = name.value;
+            sbmbname.innerHTML = name.value;
+            sbmhname.innerHTML = name.value;
+        });
+        let designation = document.getElementById('designation');
+        let tdesignation = document.getElementById('t-designation');
+        let bldesignation = document.getElementById('bl-designation');
+        let sbdesignation = document.getElementById('sb-designation');
+        let sbmdesignation = document.getElementById('sbm-designation');
+        let sbm1designation = document.getElementById('sbm1-designation');
+        let sbmldesignation = document.getElementById('sbml-designation');
+        let sbmbdesignation = document.getElementById('sbmb-designation');
+        let sbmhdesignation = document.getElementById('sbmh-designation');
+        designation.addEventListener('keyup', function () {
+            tdesignation.innerHTML = designation.value;
+            bldesignation.innerHTML = designation.value;
+            sbdesignation.innerHTML = designation.value;
+            sbmdesignation.innerHTML = designation.value;
+            sbm1designation.innerHTML = designation.value;
+            sbmldesignation.innerHTML = designation.value;
+            sbmbdesignation.innerHTML = designation.value;
+            sbmhdesignation.innerHTML = designation.value;
+        });
+        let email = document.getElementById('email');
+        let temail = document.getElementById('t-email');
+        let bemail = document.getElementById('b-email');
+        let blemail = document.getElementById('bl-email');
+        let sbemail = document.getElementById('sb-email');
+        let sbmemail = document.getElementById('sbm-email');
+        let sbm1email = document.getElementById('sbm1-email');
+        let sbmlemail = document.getElementById('sbml-email');
+        let sbmbemail = document.getElementById('sbmb-email');
+        let sbmhemail = document.getElementById('sbmh-email');
+        email.addEventListener('keyup', function () {
+            temail.innerHTML = email.value;
+            blemail.innerHTML = email.value;
+            sbemail.innerHTML = email.value;
+            sbmemail.innerHTML = email.value;
+            sbm1email.innerHTML = email.value;
+            sbmlemail.innerHTML = email.value;
+            sbmbemail.innerHTML = email.value;
+            sbmhemail.innerHTML = email.value;
+        });
+        let products = document.getElementById('products');
+        let tproducts = document.getElementById('t-products');
+        let bproducts = document.getElementById('b-products');
+        let blproducts = document.getElementById('bl-products');
+        let sbproducts = document.getElementById('sb-products');
+        let sbmproducts = document.getElementById('sbm-products');
+        let sbm1products = document.getElementById('sbm1-products');
+        let sbmlproducts = document.getElementById('sbml-products');
+        let sbmbproducts = document.getElementById('sbmb-products');
+        let sbmhproducts = document.getElementById('sbmh-products');
+        products.addEventListener('keyup', function () {
+            tproducts.innerHTML = products.value;
+            bproducts.innerHTML = products.value;
+            blproducts.innerHTML = products.value;
+            sbproducts.innerHTML = products.value;
+            sbmproducts.innerHTML = products.value;
+            sbm1products.innerHTML = products.value;
+            sbmlproducts.innerHTML = products.value;
+            sbmbproducts.innerHTML = products.value;
+            sbmhproducts.innerHTML = products.value;
+        });
+        let web = document.getElementById('web');
+        let sbm1web = document.getElementById('sbm1-web');
+        let sbmlweb = document.getElementById('sbml-web');
+        let sbmbweb = document.getElementById('sbmb-web');
+        let sbmhweb = document.getElementById('sbmh-web');
+        web.addEventListener('keyup', function () {
+            sbm1web.innerHTML = web.value;
+            sbmlweb.innerHTML = web.value;
+            sbmbweb.innerHTML = web.value;
+            sbmhweb.innerHTML = web.value;
+        });
+        let landline = document.getElementById('landline');
+        let blandline = document.getElementById('b-landline');
+        let bllandline = document.getElementById('bl-landline');
+        let sblandline = document.getElementById('sb-landline');
+        let sbmlandline = document.getElementById('sbm-landline');
+        let sbm1landline = document.getElementById('sbm1-landline');
+        let sbmllandline = document.getElementById('sbml-landline');
+        let sbmblandline = document.getElementById('sbmb-landline');
+        let sbmhlandline = document.getElementById('sbmh-landline');
+        landline.addEventListener('keyup', function () {
+            blandline.innerHTML = landline.value;
+            bllandline.innerHTML = landline.value;
+            sblandline.innerHTML = landline.value;
+            sbmlandline.innerHTML = landline.value;
+            sbm1landline.innerHTML = landline.value;
+            sbmllandline.innerHTML = landline.value;
+            sbmblandline.innerHTML = landline.value;
+            sbmhlandline.innerHTML = landline.value;
+        });
+    </script>
+{% endblock %}

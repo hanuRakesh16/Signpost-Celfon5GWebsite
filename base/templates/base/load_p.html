@@ -1,0 +1,5 @@
+<select class="form-control" multiple="multiple" style="width: 100%">
+    {% for p in product %}
+    <option value = {{ p.pk }}>{{ p.main_category }}</option>
+    {% endfor %}
+</select>

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 pt-4">
+
+    <div class="col-6 mx-auto">
+        <h3 class="text-center">Login</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% if messages %}
+            <div class="alert alert-{{ messages.tags }}" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class=" mt-5 form-group col-12">
+                    <input type="text" placeholder="Username" class="form-control" name="username" id="">
+                </div>
+                <div class="mt-3 form-group col-12">
+                    <input type="password" placeholder="Password" class="form-control" name="password" id="password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="checkbox" onclick="passwordToggle()" id="ShowPasswordToggle" class="justify-content-start">
+                    <label for="ShowPasswordToggle">Show Password</label>
+                </div>
+                <div class="col-6 justify-content-end">
+                    <a href="{% url 'mp_forgot_pwd' %}" class="justify-content-end">forgot password?</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </form>
+
+
+</div>
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value=" Login">#}
+{#</form>#}
+<script>
+    let passwordCheckbox = document.getElementById('ShowPasswordToggle');
+    let passwordfield = document.getElementById('password');
+    function passwordToggle(){
+        if(passwordfield.type === "password"){
+            passwordfield.type = 'text';
+        } else {
+             passwordfield.type = 'password';
+        }
+    }
+</script>
+{% endblock %}

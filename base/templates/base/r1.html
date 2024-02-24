@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid" style=" background-image:linear-gradient(to top right,#f4f4f4,#4286f4);">
+<div class="container d-flex justify-content-center align-items-center flex-column" style="height: 92.5vh">
+    <h1 class="text-center">Welcome to Signpost Directories</h1><br>
+    <h3 class="text-center">Click here to add your firm / Person to our Directories </h3><br>
+    <a href="{% url 'referral' %}">
+            <button class="btn btn-primary p-3">Add My Firm</button>
+    </a><br>
+    <a href="{% url 'ref_individual' %}">
+            <button class="btn btn-primary p-3">Add Person</button>
+    </a>
+</div>
+
+</div>
+
+
+
+{% endblock content %}

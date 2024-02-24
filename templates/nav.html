@@ -1,0 +1,81 @@
+{% load static %}
+<!-- header start -->
+    <header>
+        <div class="top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="header-contact">
+                            <ul>
+                                <li>Welcome to Signpost Celfon</li>
+                                <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 97 86 88 90 92</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-menu">
+                        <div class="menu-left">
+                            <div class="navbar">
+                                <a href="javascript:void(0)" onclick="openNav()">
+{#                                    <div class="bar-style"><i class="fa fa-bars sidebar-bar" aria-hidden="true"></i>#}
+{#                                    </div>#}
+                                </a>
+                                <div id="mySidenav" class="sidenav">
+                                    <a href="javascript:void(0)" class="sidebar-overlay" onclick="closeNav()"></a>
+                                    <nav>
+                                        <div onclick="closeNav()">
+                                            <div class="sidebar-back text-start"><i class="fa fa-angle-left pe-2"
+                                                    aria-hidden="true"></i> Back</div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="brand-logo">
+                                <a href="{% url 'index' %}"><img src="{% static 'webimages/logo/signpnglogo.png' %}"
+                                        class="img-fluid blur-up lazyload" alt="LOGO" width="200" height="100px"></a>
+                            </div>
+                        </div>
+                        <div class="menu-right pull-right">
+                            <div>
+                                <nav id="main-nav">
+                                    <div class="toggle-nav"><i class="fa fa-bars sidebar-bar"></i></div>
+                                    <ul id="main-menu" class="sm pixelstrap sm-horizontal">
+                                        <li>
+                                            <div class="mobile-back text-end">Back<i class="fa fa-angle-right ps-2"
+                                                    aria-hidden="true"></i></div>
+                                        </li>
+                                        <li><a href="{% url 'index' %}">Home</a></li>
+                                        <li><a href="{% url 'clubs' %}">Clubs</a>
+                                        {% if request.user.is_authenticated %}
+<!--                                        <li><a href="{% url 'user-profile' %}">My Listing</a></li>-->
+                                        <li><a href="{% url 'wishlist' %}">My Prospects</a></li>
+                                        <li><a href="{% url 'register_firm' %}">firm registeration</a></li>
+                                        {% endif %}
+                                        <li><a href="{% url 'careers' %}">Careers</a></li>
+                                        <li><a href="{% url 'faq' %}">FAQs</a></li>
+                                        {% if request.user.is_authenticated %}
+                                        <li>
+                                            <a href="#">Hello {% if user.first_name != '' %} {{ user.first_name }}! {% else %} {{ user.username }}! {% endif %}</a>
+                                            <ul>
+                                                <li><a href="{% url 'user-profile' %}">My Account</a></li>
+                                                <li><a href="{% url 'user-logout' %}">Logout</a></li>
+                                            </ul>
+                                        </li>
+                                        {% else %}
+                                        <li><a href="{% url 'user-login' %}">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->

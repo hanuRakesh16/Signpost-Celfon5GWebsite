@@ -1,0 +1,1 @@
+from todo.wsgi import application

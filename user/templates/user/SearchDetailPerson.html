@@ -1,0 +1,137 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <section class="container alert alert-dark">
+
+        <div class="row mt-2">
+            <div class="col-sm-12 col-md-6 col-lg-6 mb-2">
+                <div class="float-left image-wrapper">
+                    <div class="front">
+                        {% if object_list.advertisement %}
+                            <img src="{{ object_list.advertisement.url }}" alt="PHOTO"
+                                 class="img-fluid blur-up lazyload" width="500px">
+                        {% else %}
+                            <img src="{% static 'webimages/cel.jpg' %}" alt="PHOTO"
+                                 class="img-fluid blur-up lazyload" width="500px">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="float-right">
+                    {% if object_list.name %}
+                    <h3 class="fw-bold text-danger mt-2">{{ object_list.prefix|default:'' }}.{{ object_list.name|default:'Not Available' }}</h3><br>
+                    {% endif %}
+                    {% if object_list.altname %}
+                    <h4><i class="fa fa-briefcase"></i> &nbsp;{{ object_list.altname }}</h4>
+                    {% endif %}
+                    <h5><i class="fa fa-map-marker"></i>
+                        &nbsp;{{ object_list.door_no|default:'' }},&nbsp; {{ object_list.street_name|default:'' }},&nbsp;{{ object_list.area|default:'' }},<br>{{ object_list.city|default:'' }},&nbsp;{{ object_list.pincode|default:'' }}
+                    </h5><br>
+                    <a href="tel:{{ object_list.mobile_number }}">
+                        <button type="submit" class="btn btn-solid mb-3" id="mc-submit">Contact</button>
+                    </a>&nbsp;&nbsp;
+                    <a target="_blank"
+                       href="http://maps.google.com/?q={{ object_list.business_name }},{{ object_list.door_no }},{{ object_list.street_name }},{{ object_list.area }},{{ object_list.city }},{{ object_list.pincode }}">
+                        <button type="submit" class="btn btn-solid mb-3" id="mc-submit">Direction</button>
+                    </a>&nbsp;&nbsp;
+                    {% if object_list.pk in wishlist %}
+                    <a href="{% url 'user_wishlist' object_list.slug %}">
+                        <button type="submit" class="btn btn-solid mb-3" id="mc-submit">Remove From Prospects List</button>
+                    </a>&nbsp;&nbsp;
+                    {% else %}
+                        <a href="{% url 'user_wishlist' object_list.slug %}">
+                        <button type="submit" class="btn btn-solid mb-3" id="mc-submit">Add to Prospects List</button>
+                    </a>&nbsp;&nbsp;
+                      {% endif %}
+                </div>
+            </div>
+            {% if object_list.colour_advertisement %}
+                <!--section start-->
+                {#    <section class="blog-detail-page ratio2_3">#}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 blog-detail">
+                            <img src="{{ object_list.colour_advertisement.url }}" class="img-fluid blur-up lazyload"
+                                 alt="photo">
+                        </div>
+                    </div>
+                </div>
+                {#    </section>#}
+                <!--Section ends-->
+            {% endif %}
+            {% if object_list.description != None %}
+                <div class="container mt-2">
+                    <h4 class="fw-bold">Description</h4>
+                    <p>{{ object_list.description }}</p>
+                </div>
+            {% endif %}
+            <div class="container">
+                <h4 class="fw-bold">Product:</h4>
+                {% if object_list.mproducts1 != None %}
+                    <p>{{ object_list.mproducts1 }}&nbsp;({{ object_list.mtype1 }})</p>
+                {% endif %}
+                {% if object_list.mproducts2 != None %}
+                    <p>{{ object_list.mproducts2 }}&nbsp;({{ object_list.mtype2 }})</p>
+                {% endif %}
+                {% if object_list.mproducts3 != None %}
+                    <p>{{ object_list.mproducts3 }}&nbsp;({{ object_list.mtype3 }})</p>
+                {% endif %}
+            </div>
+            {% if object_list.email != None %}
+                <div class="container">
+                    <h4 class="fw-bold">Email:</h4>
+                    <a href="mailto:{{ object_list.email }}"><p>{{ object_list.email }}</p></a>
+                </div>
+            {% endif %}
+            {% if object_list.website != None %}
+                <div class="container">
+                    <h4 class="fw-bold">website:</h4>
+                    <p>{{ object_list.website }}</p>
+                </div>
+            {% endif %}
+            {% if object_list.ecomproducts_set.exists %}
+                <div class="container">
+                    <h3 class="fw-bold text-dark">Our Products:</h3>
+                    <div class="product-wrapper-grid">
+                        <div class="row margin-res">
+                            {% for ecom in object_list.ecomproducts_set.all %}
+                                <div class="col-lg-2 col-6 col-grid-box">
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                <div style="height:8rem;">
+                                                    {% if ecom.product_image %}
+                                                        <img src="{{ ecom.product_image.url }}"
+                                                             class="img-fluid blur-up lazyload"
+                                                             alt="Image" height="100px">
+                                                    {% else %}
+                                                        <img src="{% static 'webimages/na.jpg' %}"
+                                                             class="img-fluid blur-up lazyload"
+                                                             alt="Image" height="100px">
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div>
+
+                                                <h5 class="fw-bold">{{ ecom.product_name }}</h5>
+
+                                                <p>{{ ecom.product_descriptions }}</p>
+                                                <h4>₹{{ ecom.product_price }}.00</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}
+
+

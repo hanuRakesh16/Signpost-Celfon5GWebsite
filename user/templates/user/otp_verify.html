@@ -1,0 +1,47 @@
+{% extends 'main.html'%}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<section class="register-page section-b-space">
+    <div class="container">
+        {% if messages %}
+        <div id="popup"class="alert alert-{{ messages.tags }}" role="alert" style="background-color: #df6615; color: rgb(255, 255, 255); text-align: center; padding: 10px;">
+        {% for message in messages %}
+        <p style="color: aliceblue;">  {{ message }}</p>
+        {% if message.tags == 'success' %}    
+        <p style="color: aliceblue;">Login Credentials has been send to your email and sms</p>
+        <h2 style="color: aliceblue;text-transform:capitalize">Username:{{phn_number}}</h2>
+        <b style="color: aliceblue;font-size: 27px;">Password:signpost</b>
+      <h3 style="color: aliceblue;"><a href="{%url 'user-login'%}">  <button class="btn btn-primary">Login</button></a></h3>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if not verfied %}
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>OTP verify</h3>
+                <div class="theme-card">
+                    <div class="container">
+                        <h2>Enter OTP</h2>
+                        <form method="post" action="{% url 'verify' %}">
+                            {% csrf_token %}
+                            <div class="form-group col-6">
+                                {% render_field form.otp class="form-control phone" pattern="(0|91)?[6-9][0-9]{9}" required="required"  %}
+                                <br>
+                               <input type="submit" value="verify" class="btn btn-solid w-auto"/> 
+                            </div>
+                        </form>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>    
+
+    
+{% endblock %}

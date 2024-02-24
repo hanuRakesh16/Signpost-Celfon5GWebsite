@@ -1,0 +1,849 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container">
+        <form autocomplete="off" method="post">
+            {%csrf_token%}
+            <div class="form-group row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <span class="text-left h2 my-2">Business Listing Creation form </span><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reg-modal">
+    User Guide
+  </button><br><hr>
+                </div>
+                <!-- modal itself -->
+  <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Business Listing User Guide</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Fill up the following Form to create a Draft Ad (Preview) to show and get approval from the Advertiser.</p>
+{#          <img class="img-responsive imd-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1024px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="qr-code" width="200">#}
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Fill up all fields correctly- Show a Preview - Modify Contents - Add/Delete contents to suit the budget. After finalising, create Image and send by WhatsApp.</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;First fill up all fields as per need.</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Finally Select <strong>Add-on Button</strong> for BOLD/SB/SB-LOGO/BOX/TINT etc.</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;See Preview and Cost of Ad</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Show it to the Advertiser - To suit budget <i>Add/Remove (Slogan, CP, Activity Text). </i>When you change BOLD / SB etc, You immediately see the Preview + Value</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Take Screenshot of Preview and send by WhatsApp.</p>
+            <p class="lead"><i class="fa-solid fa-hand-point-right"></i>&nbsp;Or Download in Mobile and send by WhatsApp.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="f-pp"> Pink Page Title<span class="tt" data-bs-placement="top" title="Do not type this field for White Page Listing (Only for PINK PAGES) Type Correct Keyword Name">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <input type="text" class="form-control" id="f-pp" name="ping_pg_title" placeholder="Title" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="30">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="f-title">Business Name<span class="tt" data-bs-placement="top" title="Spell/Type as in Visiting Card. Be Careful in Spelling, Sri/Shri/Shree/Shre/The etc. Careful in Spacing, A B C Company/A.B.C Company, ABC Company etc.">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <input type="text" class="form-control" id="f-title" name="business_name" placeholder="Business Name" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="30">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="slogancheck" value="">
+                    <label for="slogancheck" class="mx-4">Slogan</label>
+                    <input type="text" class="form-control" disabled id="f-slogan" name="slogan" placeholder="Slogan" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="30">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="f-door">Door no, Street name<span class="tt" data-bs-placement="top" title="Do not type D.No,#,Site No.,Road,Street,Layout etc. Use Abbrevations - Rd,St,LO etc.">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <input type="text" class="form-control" id="f-door" name="door_st" placeholder="Address" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="30">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="f-city">Building, City , Pincode<span class="tt" data-bs-placement="top" title="Type Name of Building,Flr,Flat etc. City Name, Pin etc. (If space is not available, Use 3 Letter Abbrevations of city, last 2 digits of pincode etc.">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <input type="text" class="form-control" id="f-city" name="city" placeholder="Address" onkeyup="nospaces(this)" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="25">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label for="f-landline">Landline</label>
+                    <input type="number" class="form-control" id="f-landline" name="landline" placeholder="Landline" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="8">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="mobilecheck">
+                    <label for="mobilecheck" class="mx-4">Mobile  <span class="tt" data-bs-placement="top" title="Select the Checkbox. Type 10 digits continuously, without gap. No prefix of +91, or Country Code">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <div class="" id="h-mobile">
+                    <input type="number" class="form-control" disabled id="f-mobile" name="mobile" placeholder="Mobile Number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                        </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="whatsappcheck">
+
+                    <label for="whatsappcheck" class="mx-4">Whatsapp <span class="tt" data-bs-placement="top" title="Optional. Select the Checkbox. Type 10 digits continuously, without gap. No prefix of +91, or Country Code">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <div class="" id="h-whatsapp">
+                    <input type="number" class="form-control" disabled id="f-whatsapp" name="whatsapp" placeholder="Whatsapp Number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                        </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="emailcheck">
+
+                    <label for="emailcheck" class="mx-4">Email <span class="tt" data-bs-placement="top" title="Select the Checkbox if Email is Available. Type Correctly">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <div class="" id="h-email">
+                    <input type="email" class="form-control" disabled id="f-email" name="email" placeholder="email">
+                        </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="webcheck">
+                    <label for="webcheck" class="mx-4">Website <span class="tt" data-bs-placement="top" title="Select Checkbox if Website is Available. Type - www. and site name Correctly">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span></label>
+                    <div class="" id="h-web">
+                    <input type="text" class="form-control" disabled id="f-web" name="website" placeholder="website">
+                        </div>
+                </div>
+
+
+                <div class="row" id="r-p">
+                    <span>Contact - 1:</span>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <button class="btn btn-secondary my-2 mx-1" type="button" disabled id="b-contact">Contact Person (H)</button>
+                        <span class="tt" data-bs-placement="top" title="Select this button if you need 'Contact Person' as heading">
+                            <i class="fa-solid fa-circle-question"></i>
+                        </span>
+                    </div>
+                    <div class="row" id="fp">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <input class="form-check-input mx-1" type="checkbox" id="promotercheck">
+                        <label for="promotercheck" class="mx-4">Name & designation</label>
+                        <input type="text" class="form-control" disabled id="f-name" name="fp_name" placeholder="Name" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="23">
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <label for="f-number">Number</label>
+                        <input type="number" class="form-control" disabled id="f-number" name="fp_number" placeholder="Number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                    </div>
+                        </div>
+                </div>
+                <div class="row" id="r-p1">
+                    <span>Contact - 2:</span>
+                    <div class="row " id="mp">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <input class="form-check-input mx-1" type="checkbox" id="promotercheck1">
+                        <label for="promotercheck1" class="mx-4">Name & Designation</label>
+                        <input type="text" class="form-control" disabled id="f-name1" name="sp_name" placeholder="Name" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="23">
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <label for="f-number1">Number</label>
+                        <input type="number" class="form-control" disabled id="f-number1" name="sp_number" placeholder="Number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                    </div>
+                        </div>
+                </div>
+                <div class="row" id="r-p2">
+                    <span>Contact - 3:</span>
+                    <div class="row" id="lp">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12" >
+                        <input class="form-check-input mx-1" type="checkbox" id="promotercheck2">
+                        <label for="promotercheck2" class="mx-4">Name & Designation</label>
+                        <input type="text" class="form-control" disabled id="f-name2" name="tp_name" placeholder="Name" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="23">
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                        <label for="f-number2">Number</label>
+                        <input type="number" class="form-control" disabled id="f-number2" name="tp_number" placeholder="Number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                    </div>
+                        </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="descriptioncheck">
+                    <label for="descriptioncheck" class="mx-4">Activity 1:</label>
+                    <span class="tt" data-bs-placement="top" title="Select this button if you need 'Activity' as heading.">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </span><br>
+                    <button type="button" class="btn btn-secondary my-1 mx-1" disabled id="b-activity">Activity (H)</button>
+
+                    <div class="" id="h-description">
+                    <input type="text" class="form-control" disabled id="f-description" name="f_activity" placeholder="Description" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="250">
+                        <button type="button" class="btn btn-dark my-2" id="calculate">calculate</button>
+                        </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <input class="form-check-input mx-1" type="checkbox" id="descriptioncheck1">
+                    <label for="descriptioncheck1" class="mx-4">Activity 2:</label>
+                    <div class="" id="h-description1">
+                    <input type="text" class="form-control" disabled id="f-description1" name="s_activity" placeholder="Description" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="250">
+                        <button type="button" class="btn btn-dark my-2" id="calculate1">calculate</button>
+                        </div>
+                </div>
+                <button type="submit" class="btn btn-dark my-2" id="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="container">
+        <h4 class="text-danger"><span id="a-title">Business Listing</span> </h4>
+        <hr>
+        <div id="business-listing" class="p-2 col-sm-12 col-md-8 col-lg-8" style="border: none;">
+            <div class="row d-none" id="r-pp">
+                <div class="col-12">
+                    <p class="text-left lead fw-bold text-uppercase"  style="background-color:#000000; color: #FFFFFF">&nbsp;<span id="pp">Logo</span></p>
+                </div>
+            </div>
+        <div id="ad" class="p-2 col-sm-12 col-md-10 col-lg-10" style="border: none;">
+            <div class="row d-none" id="r-logo">
+                <div class="col-12">
+                    <h3 class="text-center" id="logo"><span class="px-1" style="border: 1px solid #000000; border-radius: 10px;">LOGO</span></h3>
+                </div>
+            </div>
+            <div class="row">
+                    <p class="text-left fw-bold text-uppercase" id="title">Business Name</p>
+            </div>
+            <div class="row d-none" id="r-slogan">
+                    <small class="text-center text-dark font-italic" id="slogan">slogan</small>
+            </div>
+            <div class="ml-2">
+            <div class="row">
+                <div class="">
+                    <p class="text-left" id="door">Door No, Street Name</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 col-sm-10 col-md-8 col-lg-8">
+                    <span class="text-left" id="city">building, city, pincode</span>
+                </div>
+                <div class="col-4 col-sm-2 col-md-4 col-lg-4">
+                    <p class="text-right" id="landline"></p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-mobile">
+                <div class="col col-sm col-md-6 col-lg-6">
+                    <p class="text-left">Office Mobile:</p>
+                </div>
+                <div class="col col-sm col-md-6 col-lg-6">
+                    <p class="text-right" id="mobile">97XXXXXXXXX0</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-whatsapp">
+                <div class="col col-sm col-md-6 col-lg-6">
+                    <p class="text-left">WhatsApp:</p>
+                </div>
+                <div class="col col-sm col-md-6 col-lg-6">
+                    <p class="text-right" id="whatsapp">97XXXXXXXXX0</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-email">
+                <div class="col col-sm-6 col-md-6 col-lg-6">
+                    <p class="text-left">Email:</p>
+                </div>
+                <div class="col col-sm-6 col-md-6 col-lg-6">
+                    <p class="text-right" id="email">email@address.com</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-web">
+                <div class="col col-sm-6 col-md-6 col-lg-6">
+                    <p class="text-left">website:</p>
+                </div>
+                <div class="col col-sm-6 col-md-6 col-lg-6">
+                    <p class="text-right" id="web">www.website.com</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-promoter">
+                <div class="col-sm-12 col-md-12 col-lg-12 d-none" id="d-contact">
+                    <p class="text-left text-dark fw-bold">Contact Persons:</p>
+                </div>
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                    <p class="text-left" id="name">Name, designation</p>
+                </div>
+                <div class="col-4 col-sm-8 col-md-6 col-lg-6">
+                    <p class="text-right" id="number">Number</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-promoter1">
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                    <p class="text-left" id="name1">Name, designation</p>
+                </div>
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                    <p class="text-right" id="number1">Number</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-promoter2">
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                    <p class="text-left" id="name2">Name, designation</p>
+                </div>
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                    <p class="text-right" id="number2">Number</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-description">
+                <div class="col-sm-6 col-md-6 col-lg-6 d-none" id="d-activity">
+                    <p class="text-left text-dark fw-bold">Activity:</p>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <p class="text-justify" id="description">Your description</p>
+                </div>
+            </div>
+            <div class="row d-none" id="r-description1">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <p class="text-justify" id="description1">Your description</p>
+                </div>
+            </div>
+                </div>
+        </div>
+            </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col col-sm-12 col-md-12 col-lg-12 mx-1">
+                    <h5>Add-ons</h5>
+{#                    <button class="btn btn-secondary my-2 mx-1" id="b-center">Align Center</button>#}
+                    <button class="btn btn-secondary my-2 mx-1" id="b-bold">Bold</button>
+                    <button class="btn btn-secondary my-2 mx-1" id="b-sbold">Super Bold Black</button>
+                    <button class="btn btn-secondary my-2 mx-1" id="b-sboldm">Super Bold Magenta</button>
+                    <button class="btn btn-secondary my-2 mx-1" id="b-logo">Logo</button>
+                    <button class="btn btn-secondary my-2 mx-1" id="b-border">black border</button>
+                    <button class="btn btn-secondary my-2 mx-1" id="m-border">Highlight Box</button>
+
+                    <button class="btn btn-secondary my-2 mx-1" id="">DC1</button>
+                    <button class="btn btn-secondary my-2 mx-1" id="">DC2</button>
+                </div>
+            </div>
+            <br>
+        </div>
+        <h4>Total value of <span id="v-title"></span> Business Listing : Rs.<span id="total">450</span></h4>
+        <button id="download" class="btn btn-primary">Download</button>
+        <br><br>
+        <p></p>
+    </div>
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/html2canvas.min.js' %}"></script>
+    <script>
+        let total = 450;
+        let f_total = document.getElementById('total');
+        if (f_total[0] === '-') {
+            f_total.innerHTML = '0';
+        }
+
+        let fpp = document.getElementById('f-pp');
+        let pp = document.getElementById('pp');
+        let rpp = document.getElementById('r-pp');
+        fpp.addEventListener('keyup', function () {
+            if(fpp.value.length > 0) {
+                pp.innerHTML = fpp.value;
+                rpp.classList.remove('d-none');
+            }else{
+                rpp.classList.add('d-none');
+            }
+
+
+        });
+
+        let blogo = document.getElementById('b-logo');
+        let r_logo = document.getElementById('r-logo');
+        let logo = document.getElementById('logo');
+        blogo.addEventListener('click', function () {
+            if (r_logo.classList.contains('d-none')) {
+                blogo.classList.add('btn-success');
+                r_logo.classList.remove('d-none');
+                f_total.innerHTML = total += 800;
+            } else {
+                blogo.classList.remove('btn-success');
+                r_logo.classList.add('d-none');
+                f_total.innerHTML = total -= 800;
+            }
+        });
+
+        let ftitle = document.getElementById('f-title');
+        let vtitle = document.getElementById('v-title');
+        let atitle = document.getElementById('a-title');
+        let title = document.getElementById('title');
+        ftitle.addEventListener('keyup', function () {
+            title.innerHTML = ftitle.value;
+            vtitle.innerHTML = ftitle.value;
+            atitle.innerHTML = ftitle.value;
+        });
+
+        let f_slogan = document.getElementById('f-slogan');
+        let r_slogan = document.getElementById('r-slogan');
+        let slogan = document.getElementById('slogan');
+        let hslogan = document.getElementById('h-slogan')
+        let slogancheck = document.getElementById('slogancheck');
+        let ssetState = false;
+        slogancheck.addEventListener('change', function () {
+            if (ssetState) {
+                f_slogan.setAttribute("disabled", true);
+                r_slogan.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                ssetState = false
+            } else {
+                f_slogan.removeAttribute("disabled");
+                r_slogan.classList.remove('d-none')
+                f_slogan.addEventListener('keyup', function () {
+                    slogan.innerHTML = f_slogan.value;
+                });
+                f_total.innerHTML = total += 150;
+                ssetState = true
+            }
+        })
+/*
+        let bcenter = document.getElementById('b-center');
+        bcenter.addEventListener('click', function () {
+            title.classList.toggle('text-center')
+        })
+
+ */
+
+        let fdoor = document.getElementById('f-door');
+        let door = document.getElementById('door');
+        fdoor.addEventListener('keyup', function () {
+            door.innerHTML = fdoor.value;
+        });
+
+        let fcity = document.getElementById('f-city');
+        let city = document.getElementById('city');
+        fcity.addEventListener('keyup', function () {
+            city.innerHTML = fcity.value;
+
+        });
+
+        let fmobile = document.getElementById('f-mobile');
+        let rmobile = document.getElementById('r-mobile');
+        let mobile = document.getElementById('mobile');
+        let hmobile = document.getElementById('h-mobile');
+        let mobilecheck = document.getElementById('mobilecheck');
+        let mstate = false;
+        mobilecheck.addEventListener('change', function () {
+            if (mstate) {
+                fmobile.setAttribute("disabled", true);
+                rmobile.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                mstate = false
+            } else {
+                fmobile.removeAttribute("disabled");
+                rmobile.classList.remove('d-none')
+                fmobile.addEventListener('keyup', function () {
+                    mobile.innerHTML = fmobile.value;
+                });
+                f_total.innerHTML = total += 150;
+                mstate = true
+            }
+        })
+
+        let fwhats = document.getElementById('f-whatsapp');
+        let rwhats = document.getElementById('r-whatsapp');
+        let whats = document.getElementById('whatsapp');
+        let whatscheck = document.getElementById('whatsappcheck');
+        let wstate = false;
+        whatscheck.addEventListener('change', function () {
+            if (wstate) {
+                fwhats.setAttribute("disabled", true);
+                rwhats.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                wstate = false;
+            } else {
+                fwhats.removeAttribute("disabled");
+                rwhats.classList.remove('d-none')
+                fwhats.addEventListener('keyup', function () {
+                    whats.innerHTML = fwhats.value;
+                });
+                f_total.innerHTML = total += 150;
+                wstate = true;
+            }
+        })
+
+        let f_email = document.getElementById('f-email');
+        let r_email = document.getElementById('r-email');
+        let email = document.getElementById('email');
+        let hemail = document.getElementById('h-email');
+        let emailcheck = document.getElementById('emailcheck');
+        let state = false;
+        emailcheck.addEventListener('change', function () {
+            if (state) {
+                f_email.setAttribute("disabled", true);
+                r_email.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                state = false
+            } else {
+                f_email.removeAttribute("disabled");
+                r_email.classList.remove('d-none')
+                f_email.addEventListener('keyup', function () {
+                    email.innerHTML = f_email.value;
+                });
+                f_total.innerHTML = total += 150;
+                state = true
+            }
+        })
+
+        let f_landline = document.getElementById('f-landline');
+        let landline = document.getElementById('landline');
+        f_landline.addEventListener('keyup', function () {
+            landline.innerHTML = f_landline.value;
+        });
+        /*
+        let f_landline = document.getElementById('f-landline');
+        let r_landline = document.getElementById('r-landline');
+        let landline = document.getElementById('landline');
+        {#let hlandline = document.getElementById('h-landline')#}
+        let landlinecheck = document.getElementById('landlinecheck');
+        let lsetState = false;
+        landlinecheck.addEventListener('change', function () {
+            if (lsetState) {
+                {#hlandline.classList.add('d-none')#}
+                f_landline.setAttribute("disabled", true);
+                r_landline.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                lsetState = false
+            } else {
+                {#hlandline.classList.remove('d-none')#}
+                f_landline.removeAttribute("disabled");
+                r_landline.classList.remove('d-none')
+                f_landline.addEventListener('keyup', function () {
+                    landline.innerHTML = f_landline.value;
+                });
+                f_total.innerHTML = total += 150;
+                lsetState = true
+            }
+        })
+        */
+
+        let f_web = document.getElementById('f-web');
+        let r_web = document.getElementById('r-web');
+        let web = document.getElementById('web');
+        let hweb = document.getElementById('h-web')
+        let webcheck = document.getElementById('webcheck');
+        let setState = false;
+        webcheck.addEventListener('change', function () {
+            if (setState) {
+                f_web.setAttribute("disabled", true);
+                r_web.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                setState = false
+            } else {
+                f_web.removeAttribute("disabled");
+                r_web.classList.remove('d-none')
+                f_web.addEventListener('keyup', function () {
+                    web.innerHTML = f_web.value;
+                });
+                f_total.innerHTML = total += 150;
+                setState = true
+            }
+        })
+
+        let bcontact = document.getElementById('b-contact');
+        let dcontact = document.getElementById('d-contact');
+        bcontact.addEventListener('click', function () {
+            dcontact.classList.toggle('d-none');
+            if(dcontact.classList.contains('d-none')) {
+                bcontact.classList.remove('btn-success')
+                f_total.innerHTML = total -= 150;
+            }else{
+                bcontact.classList.add('btn-success')
+                f_total.innerHTML = total += 150;
+            }
+        });
+
+        let fname = document.getElementById('f-name');
+        let name = document.getElementById('name');
+        let fnumber = document.getElementById('f-number');
+        let number = document.getElementById('number');
+        let r_promoter = document.getElementById('r-promoter');
+        let fp = document.getElementById('fp')
+        let promotercheck = document.getElementById('promotercheck');
+        let pstate = false;
+        promotercheck.addEventListener('change', function () {
+            if (pstate) {
+                bcontact.setAttribute("disabled", true);
+                fname.setAttribute("disabled", true);
+                fnumber.setAttribute("disabled", true)
+                r_promoter.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                pstate = false
+            } else {
+                bcontact.removeAttribute("disabled");
+                fname.removeAttribute("disabled");
+                fnumber.removeAttribute("disabled");
+                r_promoter.classList.remove('d-none')
+                fname.addEventListener('keyup', function () {
+                    name.innerHTML = fname.value;
+                });
+                fnumber.addEventListener('keyup', function () {
+                    number.innerHTML = fnumber.value;
+                });
+                f_total.innerHTML = total += 150;
+                pstate = true
+            }
+        })
+
+        let fname1 = document.getElementById('f-name1');
+        let name1 = document.getElementById('name1');
+        let fnumber1 = document.getElementById('f-number1');
+        let number1 = document.getElementById('number1');
+        let r_promoter1 = document.getElementById('r-promoter1');
+        let mp = document.getElementById('mp')
+        let promotercheck1 = document.getElementById('promotercheck1');
+        let pstate1 = false;
+        promotercheck1.addEventListener('change', function () {
+            if (pstate1) {
+                fname1.setAttribute("disabled", true);
+                fnumber1.setAttribute("disabled", true)
+                r_promoter1.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                pstate1 = false
+            } else {
+                fname1.removeAttribute("disabled");
+                fnumber1.removeAttribute("disabled");
+                r_promoter1.classList.remove('d-none')
+                fname1.addEventListener('keyup', function () {
+                    name1.innerHTML = fname1.value;
+                });
+                fnumber1.addEventListener('keyup', function () {
+                    number1.innerHTML = fnumber1.value;
+                });
+                f_total.innerHTML = total += 150;
+                pstate1 = true
+            }
+        })
+
+        let fname2 = document.getElementById('f-name2');
+        let name2 = document.getElementById('name2');
+        let fnumber2 = document.getElementById('f-number2');
+        let number2 = document.getElementById('number2');
+        let r_promoter2 = document.getElementById('r-promoter2');
+        let promotercheck2 = document.getElementById('promotercheck2');
+        let lp = document.getElementById('lp')
+        let pstate2 = false;
+        promotercheck2.addEventListener('change', function () {
+            if (pstate2) {
+                fname2.setAttribute("disabled", true);
+                fnumber2.setAttribute("disabled", true)
+                r_promoter2.classList.add('d-none')
+                f_total.innerHTML = total -= 150;
+                pstate2 = false
+            } else {
+                fname2.removeAttribute("disabled");
+                fnumber2.removeAttribute("disabled");
+                r_promoter2.classList.remove('d-none')
+                fname2.addEventListener('keyup', function () {
+                    name2.innerHTML = fname2.value;
+                });
+                fnumber2.addEventListener('keyup', function () {
+                    number2.innerHTML = fnumber2.value;
+                });
+                f_total.innerHTML = total += 150;
+                pstate2 = true
+            }
+        })
+
+
+
+        let bactivity = document.getElementById('b-activity');
+        let dactivity = document.getElementById('d-activity');
+        bactivity.addEventListener('click', function () {
+            dactivity.classList.toggle('d-none');
+            if(dactivity.classList.contains('d-none')) {
+                bactivity.classList.remove('btn-success')
+                f_total.innerHTML = total -= 150;
+            }else{
+                bactivity.classList.add('btn-success')
+                f_total.innerHTML = total += 150;
+            }
+        });
+
+        let f_description = document.getElementById('f-description');
+        let r_description = document.getElementById('r-description');
+        let description = document.getElementById('description');
+        let hdescription = document.getElementById('h-description');
+        let descriptioncheck = document.getElementById('descriptioncheck');
+        let dstate = false;
+        descriptioncheck.addEventListener('change', function () {
+            if (!dstate) {
+                bactivity.removeAttribute("disabled");
+                f_description.removeAttribute("disabled");
+
+                r_description.classList.remove('d-none')
+                f_description.addEventListener('keyup', function () {
+                    description.innerHTML = f_description.value;
+                });
+                dstate = true
+            } else {
+                bactivity.setAttribute("disabled", true);
+                f_description.setAttribute("disabled", true);
+                r_description.classList.add('d-none')
+                dstate = false
+            }
+        })
+
+        let calculate = document.getElementById('calculate')
+        calculate.addEventListener('click', function (){
+            if(f_description.value.length > 0 && f_description.value.length <= 35){
+                f_total.innerHTML = total += 150;
+            }else if(f_description.value.length > 35 && f_description.value.length <= 70){
+                f_total.innerHTML = total += 300;
+            }else if(f_description.value.length > 70 && f_description.value.length <= 105){
+                f_total.innerHTML = total += 450;
+            }else if(f_description.value.length > 105 && f_description.value.length <= 130){
+                f_total.innerHTML = total += 600;
+            }else if(f_description.value.length > 130 && f_description.value.length <= 155){
+                f_total.innerHTML = total += 750;
+            }else if(f_description.value.length > 155 && f_description.value.length <= 180){
+                f_total.innerHTML = total += 900;
+            }else if(f_description.value.length > 180 && f_description.value.length <= 215){
+                f_total.innerHTML = total += 1050;
+            }else if(f_description.value.length > 215 && f_description.value.length <= 250){
+                f_total.innerHTML = total += 1200;
+            }else{
+                f_total.innerHTML = total;
+            }
+        })
+
+        let f_description1 = document.getElementById('f-description1');
+        let r_description1 = document.getElementById('r-description1');
+        let description1 = document.getElementById('description1');
+        let hdescription1 = document.getElementById('h-description1');
+        let descriptioncheck1 = document.getElementById('descriptioncheck1');
+        let dstate1 = false;
+        descriptioncheck1.addEventListener('change', function () {
+            if (!dstate1) {
+                f_description1.removeAttribute("disabled");
+                r_description1.classList.remove('d-none')
+                f_description1.addEventListener('keyup', function () {
+                    description1.innerHTML = f_description1.value;
+                });
+                dstate1 = true
+            } else {
+                f_description1.setAttribute("disabled", true);
+                r_description1.classList.add('d-none')
+                dstate1 = false
+            }
+        })
+
+        let calculate1 = document.getElementById('calculate1')
+        calculate1.addEventListener('click', function (){
+            if(f_description1.value.length > 0 && f_description1.value.length <= 35){
+                f_total.innerHTML = total += 150;
+            }else if(f_description1.value.length > 35 && f_description1.value.length <= 70){
+                f_total.innerHTML = total += 300;
+            }else if(f_description1.value.length > 70 && f_description1.value.length <= 105){
+                f_total.innerHTML = total += 450;
+            }else if(f_description1.value.length > 105 && f_description1.value.length <= 130){
+                f_total.innerHTML = total += 600;
+            }else if(f_description1.value.length > 130 && f_description1.value.length <= 155){
+                f_total.innerHTML = total += 750;
+            }else if(f_description1.value.length > 155 && f_description1.value.length <= 180){
+                f_total.innerHTML = total += 900;
+            }else if(f_description1.value.length > 180 && f_description1.value.length <= 215){
+                f_total.innerHTML = total += 1050;
+            }else if(f_description1.value.length > 215 && f_description1.value.length <= 250){
+                f_total.innerHTML = total += 1200;
+            }else{
+                f_total.innerHTML = total;
+            }
+        })
+
+        let bold = document.getElementById('b-bold');
+        bold.addEventListener('click', function () {
+            title.classList.toggle('h5')
+            if (title.classList.contains('h5')) {
+                bold.classList.add('btn-success')
+                f_total.innerHTML = total += 150;
+            } else {
+                bold.classList.remove('btn-success')
+                f_total.innerHTML = total -= 150;
+            }
+        });
+
+        let sbold = document.getElementById('b-sbold');
+        sbold.addEventListener('click', function () {
+            title.classList.toggle('h2')
+            if (title.classList.contains('h2')) {
+                sbold.classList.add('btn-success')
+                f_total.innerHTML = total += 350;
+            } else {
+                sbold.classList.remove('btn-success')
+                f_total.innerHTML = total -= 350;
+            }
+        });
+
+        let sboldm = document.getElementById('b-sboldm');
+        sboldm.addEventListener('click', function () {
+            title.classList.toggle('h2')
+            if (title.classList.contains('h2')) {
+                sboldm.classList.add('btn-success')
+                title.style.color = 'magenta';
+                f_total.innerHTML = total += 650;
+            } else {
+                sboldm.classList.remove('btn-success')
+                title.style.color = 'black';
+                f_total.innerHTML = total -= 650;
+            }
+        });
+
+        let bborder = document.getElementById('b-border');
+        let border = document.getElementById('ad');
+        bborder.addEventListener('click', function () {
+            if (border.style.border === 'none') {
+                bborder.classList.add('btn-success')
+                border.style.border = "4px solid black";
+                f_total.innerHTML = total += 1450;
+            } else {
+                bborder.classList.remove('btn-success')
+                border.style.border = "none";
+                f_total.innerHTML = total -= 1450;
+            }
+        });
+
+        let mborder = document.getElementById('m-border');
+        mborder.addEventListener('click', function () {
+            if (border.style.border === 'none') {
+                mborder.classList.add('btn-success');
+                border.style.border = "4px solid magenta";
+                border.style.backgroundColor = "#fbcafc";
+                title.style.color = "magenta";
+                title.classList.add('h2');
+                f_total.innerHTML = total += 1650;
+            } else {
+                mborder.classList.remove('btn-success');
+                border.style.border = "none";
+                border.style.backgroundColor = "#fff";
+                title.style.color = "black";
+                title.classList.remove('h2');
+                f_total.innerHTML = total -= 1650;
+            }
+        });
+
+
+        $("#download").on('click', function () {
+            console.log("clicked");
+            html2canvas(document.getElementById("ad"), {
+                allowTaint: true,
+                useCORS: true
+            }).then(function (canvas) {
+                let anchorTag = document.createElement("a");
+                anchorTag.download = "img.jpg";
+                anchorTag.href = canvas.toDataURL();
+                anchorTag.target = '_blank';
+                anchorTag.click();
+            });
+        });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script>
+        const tooltips = document.querySelectorAll('.tt')
+        tooltips.forEach(t => {
+          new bootstrap.Tooltip(t)
+        })
+      </script>
+      <script>
+        $('f-city').keypress(function( e ) {
+            if(e.which === 32) {
+                return false;
+            }
+        })
+      </script>
+{% endblock %}

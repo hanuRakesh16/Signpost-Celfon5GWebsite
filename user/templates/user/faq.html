@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3 class="text-center text-dark fw-bold">CELFON - FAQs</h3>
+        </div>
+</div>
+            <!--section start-->
+    <section class="faq-section section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="accordion theme-accordion" id="accordionExample">
+                        {% for faq in titles %}
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0"><button class="btn btn-link collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">{{ faq.0.subject }}</button></h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ol class="list-group list-group-numbered">
+                                        {% for i in faq %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                            <div class="fw-bold text-primary">{{i.title}}</div>
+                                            {{i.answer}}
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section ends-->
+
+{% endblock %}

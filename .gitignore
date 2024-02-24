@@ -1,0 +1,6 @@
+todo/.env
+__pycache__
+venv/
+staticfiles/
+.ebextensions/
+.idea/

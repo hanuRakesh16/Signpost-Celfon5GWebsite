@@ -1,0 +1,138 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        .section1 {
+            background-color: lightcyan;
+            margin: 30px;
+            padding: 10px;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .section {
+            margin: 30px;
+            padding: 10px;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .span1 {
+            color: aliceblue;
+        }
+
+        .button1:hover {
+            color: #000000;
+
+        }
+    </style>
+    <section class="section-b-space ratio_asos section">
+        <div class="collection-wrapper">
+            <div class="container">
+                <div class="product-wrapper-grid list-view">
+                    <div class="col-xl-12 col-sm-12 col-12 col-lg-12">
+                            <div class=" bg-color1 m-0 p-1">
+                                <h3 class="d-flex justify-content-center text-dark">Results for "{{ query }}" &nbsp;&nbsp;</h3>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if objects %}
+        {% for object in objects %}
+
+            {#    custom  #}
+            <section class="section-b-space ratio_asos section1">
+                <div class="collection-wrapper">
+                    <div class="container">
+                        <div class="product-wrapper-grid list-view">
+                            <div class="">
+                                <div class="col-xl-6 col-sm-12 col-12 col-lg-8">
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                {% if object.business_card %}
+                                                    <img src="{{ object.business_card.url }}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% else %}
+                                                    <img src="{% static 'webimages/cel.jpg' %}"
+                                                         class="img-fluid blur-up lazyload bg-img"
+                                                         alt="Image">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div>
+
+                                                <a class="font-weight-bold h3 ">
+                                                    <b>{{ object.name }}</b>
+                                                </a>
+                                                {% if object.profession %}
+                                                <div class="promoter h5"><br><i class="fa-solid fa-briefcase"></i>&nbsp;
+                                                    <span class="h6">{{ object.profession }}</span>
+                                                </div>
+                                                {% endif %}
+                                                
+                                                <div class="address h5"><i class="fa-solid fa-location-dot"></i>&nbsp;
+                                                    <span class="h6">{{ object.door_no }},&nbsp; {{ object.street_name }},&nbsp;{{ object.locality }},&nbsp;{{ object.city }},&nbsp;{{ object.pincode }}</span>
+                                                </div>
+                                                <div class="phone h5"><i class="fa fa-solid fa-phone"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="tel:{{ object.mobile_number }}">{{ object.mobile_number }}</a></span>
+                                                </div>
+                                                <div class="phone h5"><i class="fa-solid fa-envelope"></i>&nbsp;
+                                                    <span class="h6"><a
+                                                            href="mailto:{{ object.email }}">{{ object.email }}</a></span>
+                                                </div>
+                                                {% comment %} <div class="rating"><i class="fa fa-star"></i> <i
+                                                        class="fa fa-star"></i> <i
+                                                        class="fa fa-star"></i> <i
+                                                        class="fa fa-star"></i> <i
+                                                        class="fa fa-star"></i></div>
+                                                <div><br> {% endcomment %}
+                                                    {% comment %} <button class="btn button1 btn-solid "><a
+                                                            href="mailto:{{ object.email }}"><span
+                                                            class="button1 span1">Email</span></a></button>&nbsp; {% endcomment %}
+                                                    {% comment %} <button class="btn button1 btn-solid "><a
+                                                            ><span
+                                                            class="button1 span1">Add to My List</span></a></button>&nbsp; {% endcomment %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {#    custom  #}
+
+
+
+        {% endfor %}
+    {% else %}
+        <div class="collection-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-md-12 alert alert-dark">
+                            <h3 class="d-flex justify-content-center text-dark">No results found! &nbsp;&nbsp;</h3>
+                            <h2 class="d-flex justify-content-center"><a href="{% url 'index' %}">Try another
+                                keyword.</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+

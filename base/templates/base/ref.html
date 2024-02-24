@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container" style="padding: 0">
+    <div class="" style="padding: 0">
+        <div class="col-md-offset-1 col-md-12">
+            <div class="panel" style="padding: 5px">
+                <div class="panel-heading" style="padding: 20px 15px;
+    border-radius: 10px 10px 0 0;
+    margin: 0;">
+                    <div class="row">
+                        <h1 class="text-center text-dark">My Referrals</h1><br><br>
+                        <h6 class="text-dark">Your Referral link :</h6><br>
+                        <span id="clipboard-text"
+                              class="text-success">celfon5g.in/mp/referral/{{ user }}</span><br><br>
+                        <button class="btn btn-primary col-sm-5 col-lg-3 mt-2"><span id="clipboard-exec"> Copy to clipboard</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="container mt-2">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-bold" data-bs-toggle="tab" href="#home">
+                                Firms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold" data-bs-toggle="tab" href="#profile">
+                                My Team</a>
+                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link fw-bold" data-bs-toggle="tab" href="#individual">#}
+{#                                Individual Form</a>#}
+{#                        </li>#}
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home">
+                            <div class="row border g-0 rounded shadow-sm">
+                                <div class="col p-4">
+                                    <div class="panel-body table-responsive text-dark">
+                                        <table class="table text-dark">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Business name</th>
+                                                <th>City</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for task in my_recs|slice:"50" %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ task.business_name }}</td>
+                                                    <td>{{ task.city }}</td>
+                                                </tr>
+                                            {% empty %}
+                                                <h3>No Items in List</h3>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="profile">
+                            <div class="row border g-0 rounded shadow-sm">
+                                <div class="col p-4">
+                                    <div class="panel-body table-responsive text-dark">
+                                        <table class="table text-dark">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Data Entry Income</th>
+                                                <th>Business Listing Income</th>
+                                                <th>Individuals Income</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for summary in my_teams %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ summary.user }}</td>
+                                                    <td class="text-success">₹{{ summary.data_income.income_amount }}</td>
+                                                    <td class="text-success">₹{{ summary.bl_income.total }}</td>
+                                                    <td class="text-success">₹{{ summary.ind_income.total_income }}</td>
+                                                </tr>
+                                            {% empty %}
+                                                <h3>No Items in List</h3>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <script>
+        function copy_text(node) {
+            if (document.body.createTextRange) {
+                const range = document.body.createTextRange();
+                range.moveToElementText(node);
+                range.select();
+                document.execCommand('copy');
+            } else if (window.getSelection) {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(node);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('copy');
+            } else {
+                console.warn("Could not select text in node");
+            }
+        }
+
+        // This copy_text function ensures cross-browser compatibility
+        // What it does is select the text within the range of the node holding the text
+        // Then executes the "copy" command on that selected text
+
+        function clear_selection() {
+            if (window.getSelection) {
+                window.getSelection().removeAllRanges();
+            } else if (document.selection) {
+                document.selection.empty();
+            }
+        }
+
+        // This clear_selection function clears any selection from the document
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("clipboard-exec").onclick = function () {
+                copy_text(document.getElementById("clipboard-text"));
+                // Copy the text on clicking the button
+                setTimeout(() => {
+                    clear_selection()
+                }, 500);
+                // Clear the selection after 0.5s
+            }
+        });
+    </script>
+{% endblock %}
